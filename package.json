@@ -1,0 +1,12 @@
+{
+  "name": "ats-tutorials",
+  "private": true,
+  "description": "Smoke-test tooling for the ATS Build samples. Each sample has its own package.json.",
+  "type": "module",
+  "scripts": {
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "25.16.0"
+  }
+}

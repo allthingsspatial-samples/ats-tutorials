@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 04 Custom Map Controls</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: system-ui, sans-serif; }
+      arcgis-map { display: block; width: 100%; height: 100%; }
+      #controls { display: flex; flex-direction: column; gap: 8px; }
+      #controls button {
+        display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+        border: 0; border-radius: 12px; cursor: pointer;
+        background: rgba(255, 255, 255, 0.85); color: #212529;
+        backdrop-filter: blur(12px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      }
+      #controls button:hover { background: #fff; }
+      #controls button:disabled { opacity: 0.45; cursor: default; }
+      #controls svg {
+        width: 19px; height: 19px; fill: none; stroke: currentColor;
+        stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+      }
+    </style>
+  </head>
+  <body>
+    <arcgis-map basemap="satellite" center="-112.11, 36.09" zoom="12">
+      <!-- Our own controls, placed in the map's top-right slot. Icons: Lucide (ISC license). -->
+      <nav id="controls" slot="top-right" aria-label="Map controls">
+        <button id="zoom-in" title="Zoom in" aria-label="Zoom in">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+        </button>
+        <button id="zoom-out" title="Zoom out" aria-label="Zoom out">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14" /></svg>
+        </button>
+        <button id="home" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+        </button>
+        <button id="basemap" title="Switch basemap" aria-label="Switch basemap">
+          <svg viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></svg>
+        </button>
+      </nav>
+    </arcgis-map>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

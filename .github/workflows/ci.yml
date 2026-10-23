@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    name: Discover samples
+    runs-on: ubuntu-latest
+    outputs:
+      samples: ${{ steps.find.outputs.samples }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        name: List every samples/*/ folder with a package.json
+        run: |
+          samples=$(for d in samples/*/; do [ -f "$d/package.json" ] && basename "$d"; done | jq -R . | jq -sc .)
+          echo "Found: $samples"
+          if [ "$samples" = "[]" ]; then echo "::error::No samples found under samples/"; exit 1; fi
+          echo "samples=$samples" >> "$GITHUB_OUTPUT"
+
+  sample:
+    name: ${{ matrix.sample }}
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: ${{ fromJson(needs.discover.outputs.samples) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install smoke-test tooling
+        run: npm ci
+      - name: npm ci
+        working-directory: samples/${{ matrix.sample }}
+        run: npm ci
+      - name: npm run build
+        working-directory: samples/${{ matrix.sample }}
+        run: npm run build
+      - name: Headless smoke run
+        run: node scripts/smoke.mjs samples/${{ matrix.sample }}

@@ -1,0 +1,23 @@
+# Dependencies and build output
+node_modules/
+dist/
+.vite/
+
+# Secrets: never commit keys, tokens or env files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.*
+
+# Logs and OS / editor noise
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
