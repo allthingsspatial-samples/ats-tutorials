@@ -16,6 +16,7 @@ samples/
   <nn-topic>/       # one folder per episode sample, added with the episode
 scripts/
   smoke.mjs         # headless smoke test that CI runs against every sample
+  content-scan.mjs  # forbidden-content scan that CI runs on every push
 ```
 
 Each sample is a self-contained Vite project with its own `package.json` and `package-lock.json`. The `@arcgis/core` version is pinned exactly, so a sample keeps working after the SDK moves on.
@@ -25,7 +26,7 @@ Each sample is a self-contained Vite project with its own `package.json` and `pa
 You need Node.js 20 or later.
 
 ```bash
-git clone https://github.com/allthingsspatial/ats-tutorials.git
+git clone https://github.com/allthingsspatial-samples/ats-tutorials.git
 cd ats-tutorials/samples/00-hello-map
 npm ci
 npm run dev
@@ -44,6 +45,8 @@ No API key is needed for `00-hello-map`. If a later sample needs one, its own RE
 3. A headless smoke run (`scripts/smoke.mjs`): it serves the built `dist/` folder, opens it in headless Chrome and passes only if the page loads, the map view becomes ready, there are no console errors or failed requests, and no request carries a `token=`.
 
 To add a sample, add a folder. You do not need to edit the CI file.
+
+A separate `Forbidden-content scan` job (`scripts/content-scan.mjs`) checks every tracked file and every commit message for local file paths, credentials (API keys, access tokens, private keys, `.env` files) and a denylist of terms that must not appear in this repo. The denylist is stored only as salted hashes in `scripts/content-scan.denylist.json`. Findings print the file, the line and the category, never the matched text. Run it locally with `node scripts/content-scan.mjs`.
 
 ### Sample contract
 
