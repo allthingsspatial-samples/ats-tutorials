@@ -1,0 +1,3 @@
+# Larger extracts are made locally with scripts/extract.py; only the Denver file is in the repo.
+public/data/*.parquet
+!public/data/denver-places.parquet

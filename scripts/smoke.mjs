@@ -35,7 +35,18 @@ const server = http.createServer((req, res) => {
   // Chrome asks for /favicon.ico on its own; a sample without one is not an error.
   if (!fs.existsSync(file) && urlPath === "/favicon.ico") { res.writeHead(204).end(); return; }
   if (!fs.existsSync(file)) { res.writeHead(404).end(); return; }
-  res.writeHead(200, { "Content-Type": MIME[path.extname(file)] ?? "application/octet-stream" });
+  const type = MIME[path.extname(file)] ?? "application/octet-stream";
+  const size = fs.statSync(file).size;
+  // Parquet readers fetch byte ranges, so answer Range requests the way a static host does.
+  const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? "");
+  if (range) {
+    const start = range[1] ? Number(range[1]) : size - Number(range[2]);
+    const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+    res.writeHead(206, { "Content-Type": type, "Content-Length": end - start + 1, "Content-Range": `bytes ${start}-${end}/${size}`, "Accept-Ranges": "bytes" });
+    fs.createReadStream(file, { start, end }).pipe(res);
+    return;
+  }
+  res.writeHead(200, { "Content-Type": type, "Content-Length": size, "Accept-Ranges": "bytes" });
   fs.createReadStream(file).pipe(res);
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
@@ -57,7 +68,11 @@ try {
     requests++;
     if (/[?&]token=/i.test(r.url())) problems.push(`token in request: ${r.url().split("?")[0]}`);
   });
-  page.on("requestfailed", (r) => problems.push(`request failed: ${r.url()} (${r.failure()?.errorText})`));
+  page.on("requestfailed", (r) => {
+    // A Parquet reader cancels its own stream once it has the bytes it needs: not a failure.
+    if (r.failure()?.errorText === "net::ERR_ABORTED" && /\.parquet$/i.test(new URL(r.url()).pathname)) return;
+    problems.push(`request failed: ${r.url()} (${r.failure()?.errorText})`);
+  });
   page.on("response", (r) => { if (r.status() >= 400) problems.push(`HTTP ${r.status()}: ${r.url()}`); });
 
   await page.goto(url, { waitUntil: "load", timeout: TIMEOUT_MS });

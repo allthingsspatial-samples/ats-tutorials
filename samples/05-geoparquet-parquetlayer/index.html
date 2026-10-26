@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 05 GeoParquet on a Web Map</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: system-ui, sans-serif; }
+      arcgis-map { display: block; width: 100%; height: 100%; }
+      #panel {
+        width: 300px; padding: 14px 16px; border-radius: 12px; color: #e9eef5; font-size: 14px;
+        background: rgba(10, 18, 31, 0.88); backdrop-filter: blur(12px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      }
+      #panel h1 { margin: 0 0 2px; font-size: 16px; }
+      #panel .beta { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 6px; font-size: 11px; background: #ffbf0b; color: #0a121f; }
+      #panel label { display: block; margin: 10px 0 4px; font-size: 12px; color: #9fb0c4; }
+      #panel select { width: 100%; padding: 6px; border-radius: 8px; border: 0; font-size: 14px; }
+      #panel .stat { margin: 8px 0 0; font-variant-numeric: tabular-nums; }
+      #panel ol { margin: 6px 0 0; padding-left: 20px; }
+      #panel .note { font-size: 12px; color: #ffbf0b; }
+      #panel .source { margin-top: 10px; font-size: 11px; color: #9fb0c4; }
+    </style>
+  </head>
+  <body>
+    <arcgis-map basemap="dark-gray-vector" center="-104.95, 39.74" zoom="11">
+      <section id="panel" slot="top-right" aria-label="GeoParquet layer">
+        <h1>Overture places <span class="beta">ParquetLayer beta</span></h1>
+        <label for="file">File</label>
+        <select id="file"></select>
+        <p class="stat" id="loaded">Loading...</p>
+        <label for="filter">definitionExpression</label>
+        <select id="filter">
+          <option value="">(none) all places</option>
+          <option value="status = 'open'">status = 'open'</option>
+          <option value="category = 'restaurant'">category = 'restaurant'</option>
+        </select>
+        <p class="stat" id="count"></p>
+        <label>Top categories (statistics query)</label>
+        <ol id="top"></ol>
+        <p class="stat note" id="note"></p>
+        <p class="stat" id="distinct"></p>
+        <p class="stat" id="hits">Click the map: hitTest lists every place under the cursor.</p>
+        <p class="source">Data: Overture Maps Foundation, overturemaps.org. Places theme, release 2026-10-21.0, CDLA Permissive 2.0 and Apache 2.0.</p>
+      </section>
+    </arcgis-map>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -13,6 +13,7 @@ samples/
   02-imagery-swipe/     # before/after Landsat imagery with the arcgis-swipe component (BLD-S01E02)
   03-clip-geotiff/      # draw a box, clip USGS 3DEP elevation, save a GeoTIFF (BLD-S01E03)
   04-custom-map-controls/  # your own zoom, home and basemap buttons, no widgets (BLD-S01E04)
+  05-geoparquet-parquetlayer/  # Overture places GeoParquet in a ParquetLayer (beta): filter, query, hitTest (BLD-S02E01)
   <nn-topic>/       # one folder per episode sample, added with the episode
 scripts/
   smoke.mjs         # headless smoke test that CI runs against every sample
