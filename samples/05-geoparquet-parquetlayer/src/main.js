@@ -54,7 +54,7 @@ async function loadFile(name) {
   await reactiveUtils.whenOnce(() => !layerView.updating);
   const total = await layer.queryFeatureCount({ where: "1=1" });
   const seconds = ((performance.now() - started) / 1000).toFixed(1);
-  document.querySelector("#loaded").textContent = `${total.toLocaleString()} places drawn in ${seconds} s`;
+  document.querySelector("#loaded").textContent = `${total.toLocaleString()} places loaded in ${seconds} s`;
   window.lastLoad = { name, total, seconds: Number(seconds) };
   await runQueries();
 }
