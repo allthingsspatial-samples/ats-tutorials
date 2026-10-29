@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       samples: ${{ steps.find.outputs.samples }}
+      python: ${{ steps.find-python.outputs.python }}
     steps:
       - uses: actions/checkout@v4
       - id: find
@@ -37,6 +38,12 @@ jobs:
           echo "Found: $samples"
           if [ "$samples" = "[]" ]; then echo "::error::No samples found under samples/"; exit 1; fi
           echo "samples=$samples" >> "$GITHUB_OUTPUT"
+      - id: find-python
+        name: List every python/*/ folder with a requirements.txt
+        run: |
+          python=$(for d in python/*/; do [ -f "$d/requirements.txt" ] && basename "$d"; done | jq -R . | jq -sc .)
+          echo "Found: $python"
+          echo "python=$python" >> "$GITHUB_OUTPUT"
 
   sample:
     name: ${{ matrix.sample }}
@@ -61,3 +68,32 @@ jobs:
         run: npm run build
       - name: Headless smoke run
         run: node scripts/smoke.mjs samples/${{ matrix.sample }}
+
+  python:
+    name: python/${{ matrix.sample }}
+    needs: discover
+    if: needs.discover.outputs.python != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: ${{ fromJson(needs.discover.outputs.python) }}
+    defaults:
+      run:
+        working-directory: python/${{ matrix.sample }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: pip install -r requirements.txt
+        run: pip install -r requirements.txt
+      - name: python main.py
+        run: python main.py | tee actual-output.txt
+      - name: Compare with expected-output.txt
+        run: |
+          if [ -f expected-output.txt ]; then
+            diff -u expected-output.txt actual-output.txt
+          else
+            echo "No expected-output.txt: main.py ran without error"
+          fi

@@ -15,6 +15,8 @@ samples/
   04-custom-map-controls/  # your own zoom, home and basemap buttons, no widgets (BLD-S01E04)
   05-geoparquet-parquetlayer/  # Overture places GeoParquet in a ParquetLayer (beta): filter, query, hitTest (BLD-S02E01)
   <nn-topic>/       # one folder per episode sample, added with the episode
+python/
+  con-04-mapclassify-breaks/  # Python companion: four mapclassify classifications of one county variable (CON-S01E04)
 scripts/
   smoke.mjs         # headless smoke test that CI runs against every sample
   content-scan.mjs  # forbidden-content scan that CI runs on every push
@@ -30,6 +32,8 @@ Some episodes of the **GIS Concepts** series (playlist: https://www.youtube.com/
 |---|---|---|
 | CON-S01E01 | [`con-01-geodesic-vs-planar`](samples/con-01-geodesic-vs-planar/): planar area on Web Mercator vs geodesic area on the ellipsoid | https://concepts.allthingsspatial.io/projection-lab/ |
 | CON-S01E03 | [`con-03-renderers-by-level`](samples/con-03-renderers-by-level/): nominal, ordinal, interval and ratio renderers on one county layer | https://concepts.allthingsspatial.io/measurement-lab/ |
+| CON-S01E04 | [`con-04-class-breaks`](samples/con-04-class-breaks/): natural breaks, quantile, equal interval and standard deviation class breaks, 3-7 classes | https://concepts.allthingsspatial.io/concepts/classification/ |
+| CON-S01E04 | [`python/con-04-mapclassify-breaks`](python/con-04-mapclassify-breaks/) (Python): the same four classifications with mapclassify, breaks and class counts printed | https://concepts.allthingsspatial.io/concepts/classification/ |
 
 ## Run a sample
 
@@ -55,6 +59,8 @@ No API key is needed for `00-hello-map`. If a later sample needs one, its own RE
 3. A headless smoke run (`scripts/smoke.mjs`): it serves the built `dist/` folder, opens it in headless Chrome and passes only if the page loads, the map view becomes ready, there are no console errors or failed requests, and no request carries a `token=`.
 
 To add a sample, add a folder. You do not need to edit the CI file.
+
+A `python` job does the same for every `python/*/` folder that has a `requirements.txt`: it sets up Python 3.13, runs `pip install -r requirements.txt` and `python main.py`, and, if the folder has an `expected-output.txt`, fails unless the printed output matches it exactly.
 
 A separate `Forbidden-content scan` job (`scripts/content-scan.mjs`) checks every tracked file and every commit message for local file paths, credentials (API keys, access tokens, private keys, `.env` files) and a denylist of terms that must not appear in this repo. The denylist is stored only as salted hashes in `scripts/content-scan.denylist.json`. Findings print the file, the line and the category, never the matched text. Run it locally with `node scripts/content-scan.mjs`.
 

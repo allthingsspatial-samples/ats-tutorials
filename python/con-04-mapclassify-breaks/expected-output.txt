@@ -1,0 +1,30 @@
+Texas counties: 254, people per km2 (2024), k = 5
+min 0.03  max 1174.41  mean 50.81
+
+Fisher-Jenks
+       -inf -     63.69   219 counties
+      63.69 -    224.81    22 counties
+     224.81 -    459.23     7 counties
+     459.23 -    662.35     3 counties
+     662.35 -   1174.41     3 counties
+
+Quantiles
+       -inf -      1.62    51 counties
+       1.62 -      5.40    51 counties
+       5.40 -     12.83    50 counties
+      12.83 -     37.65    51 counties
+      37.65 -   1174.41    51 counties
+
+EqualInterval
+       -inf -    234.91   241 counties
+     234.91 -    469.78     7 counties
+     469.78 -    704.66     3 counties
+     704.66 -    939.53     0 counties
+     939.53 -   1174.41     3 counties
+
+StdMean
+       -inf -   -243.05     0 counties
+    -243.05 -    -96.12     0 counties
+     -96.12 -    197.74   240 counties
+     197.74 -    344.67     4 counties
+     344.67 -   1174.41    10 counties
