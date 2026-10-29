@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - con-04 Class Breaks</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: system-ui, sans-serif; }
+      arcgis-map { display: block; width: 100%; height: 100%; }
+      #panel {
+        width: 320px; padding: 14px 16px; border-radius: 12px; color: #e9eef5; font-size: 14px;
+        background: rgba(10, 18, 31, 0.88); backdrop-filter: blur(12px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      }
+      #panel h1 { margin: 0 0 10px; font-size: 16px; }
+      #panel label { display: block; margin: 8px 0 4px; font-size: 12px; color: #9fb0c4; }
+      #panel select { width: 100%; padding: 6px; border: 0; border-radius: 8px; background: #26344a; color: #e9eef5; font-size: 13px; }
+      #classes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+      #classes button { padding: 6px 0; border: 0; border-radius: 8px; cursor: pointer; background: #26344a; color: #e9eef5; }
+      #classes button[aria-pressed="true"] { background: #ffbf0b; color: #0a121f; font-weight: 600; }
+      #classes button:disabled { opacity: 0.4; cursor: default; }
+      #panel .what { margin: 10px 0 0; line-height: 1.4; }
+      #panel .source { margin: 10px 0 0; font-size: 11px; color: #9fb0c4; }
+    </style>
+  </head>
+  <body>
+    <arcgis-map basemap="gray-vector" center="-99.3, 31.3" zoom="5">
+      <section id="panel" slot="top-right" aria-label="Classification">
+        <h1>Texas counties, people per km²</h1>
+        <label for="method">Classification method</label>
+        <select id="method">
+          <option value="natural-breaks">Natural breaks (Jenks)</option>
+          <option value="quantile">Quantile</option>
+          <option value="equal-interval">Equal interval</option>
+          <option value="standard-deviation">Standard deviation</option>
+        </select>
+        <label>Number of classes</label>
+        <div id="classes" role="group" aria-label="Number of classes">
+          <button>3</button><button>4</button><button>5</button><button>6</button><button>7</button>
+        </div>
+        <p class="what" id="what"></p>
+        <p class="source">Data: US Census Bureau, cartographic boundary counties 1:20m 2023 and population estimates
+          Vintage 2024 (July 1, 2024).</p>
+      </section>
+      <arcgis-legend slot="bottom-left"></arcgis-legend>
+    </arcgis-map>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
