@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - con-01 Geodesic vs Planar Area</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: system-ui, sans-serif; }
+      arcgis-map { display: block; width: 100%; height: 100%; }
+      #panel {
+        width: 380px; padding: 14px 16px; border-radius: 12px; color: #e9eef5; font-size: 14px;
+        background: rgba(10, 18, 31, 0.88); backdrop-filter: blur(12px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      }
+      #panel h1 { margin: 0 0 6px; font-size: 16px; }
+      #panel table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+      #panel th, #panel td { padding: 4px 0 4px 12px; text-align: right; }
+      #panel th:first-child, #panel td:first-child { padding-left: 0; text-align: left; }
+      #panel th { font-size: 12px; font-weight: 600; color: #9fb0c4; }
+      #panel .note { margin: 10px 0 0; font-size: 12px; color: #9fb0c4; }
+    </style>
+  </head>
+  <body>
+    <arcgis-map basemap="gray-vector" center="-20, 30" zoom="2">
+      <section id="panel" slot="top-right" aria-label="Area comparison">
+        <h1>Area: planar vs geodesic</h1>
+        <table>
+          <thead>
+            <tr><th>Country</th><th>Planar (Web Mercator)</th><th>Geodesic</th><th>Ratio</th></tr>
+          </thead>
+          <tbody id="rows"><tr><td colspan="4">Measuring...</td></tr></tbody>
+        </table>
+        <p class="note">Areas in million km². Planar: <code>areaOperator</code> on the Web Mercator geometry.
+          Geodesic: <code>geodeticAreaOperator</code> on the WGS84 ellipsoid. Ratio = planar / geodesic.</p>
+        <p class="note">Data: Natural Earth 1:50m countries, public domain.</p>
+      </section>
+    </arcgis-map>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

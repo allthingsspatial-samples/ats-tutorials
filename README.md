@@ -22,6 +22,14 @@ scripts/
 
 Each sample is a self-contained Vite project with its own `package.json` and `package-lock.json`. The `@arcgis/core` version is pinned exactly, so a sample keeps working after the SDK moves on.
 
+## GIS Concepts companions
+
+Some episodes of the **GIS Concepts** series (playlist: https://www.youtube.com/playlist?list=PLHbasl_Mg-uE) also get a sample: the smallest app that shows the JavaScript technique behind the concept. These folders are named by episode code, `con-NN-<topic>`.
+
+| Episode | Sample | Concept page |
+|---|---|---|
+| CON-S01E01 | [`con-01-geodesic-vs-planar`](samples/con-01-geodesic-vs-planar/): planar area on Web Mercator vs geodesic area on the ellipsoid | https://concepts.allthingsspatial.io/projection-lab/ |
+
 ## Run a sample
 
 You need Node.js 20 or later.
