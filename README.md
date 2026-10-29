@@ -29,6 +29,7 @@ Some episodes of the **GIS Concepts** series (playlist: https://www.youtube.com/
 | Episode | Sample | Concept page |
 |---|---|---|
 | CON-S01E01 | [`con-01-geodesic-vs-planar`](samples/con-01-geodesic-vs-planar/): planar area on Web Mercator vs geodesic area on the ellipsoid | https://concepts.allthingsspatial.io/projection-lab/ |
+| CON-S01E03 | [`con-03-renderers-by-level`](samples/con-03-renderers-by-level/): nominal, ordinal, interval and ratio renderers on one county layer | https://concepts.allthingsspatial.io/measurement-lab/ |
 
 ## Run a sample
 
