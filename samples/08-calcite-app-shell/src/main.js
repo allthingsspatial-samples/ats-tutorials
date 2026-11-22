@@ -63,6 +63,8 @@ function fit() {
   const mode = narrow.matches ? "overlay" : "dock";
   startPanel.displayMode = mode;
   endPanel.displayMode = mode;
+  // The legend is 300 px wide: on a phone, the wide panel size keeps it from being cut off.
+  startPanel.width = endPanel.width = narrow.matches ? "l" : "m";
   if (narrow.matches) open(null);
 }
 narrow.addEventListener("change", fit);

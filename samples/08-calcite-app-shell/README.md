@@ -39,7 +39,7 @@ Build note: Calcite's colors use the CSS `light-dark()` function. `vite.config.j
 
 ## Responsive
 
-Calcite's Shell does not hide panels on small screens by itself. Under 700 px wide the sample sets both shell panels to `displayMode = "overlay"` (they float over the map instead of pushing it aside) and collapses them until an action is clicked.
+Calcite's Shell does not hide panels on small screens by itself. Under 700 px wide the sample sets both shell panels to `displayMode = "overlay"` (they float over the map instead of pushing it aside), sets their `width` to `"l"` so the 300 px legend is not cut off, and collapses them until an action is clicked.
 
 ## Links
 
