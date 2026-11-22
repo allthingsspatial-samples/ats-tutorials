@@ -131,7 +131,14 @@ if (mode === "key") {
     // ResultID matches the OBJECTID you sent, so each result finds its row.
     const results = candidates.map((c) => {
       const row = rows[c.attributes.ResultID - 1];
-      return { name: row.name, address: row.address, score: Math.round(c.score), match: c.address, type: c.attributes.Addr_type, location: c.location };
+      return {
+        name: row.name,
+        address: row.address,
+        score: Math.round(c.score),
+        match: c.address,
+        type: c.attributes.Addr_type,
+        location: c.location,
+      };
     });
     // Lowest score first: those are the matches to check.
     results.sort((a, b) => a.score - b.score);
