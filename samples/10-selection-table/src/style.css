@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+:root {
+  color-scheme: light;
+}
+#bottom-panel {
+  --calcite-shell-panel-height: 48vh;
+}
+#table {
+  height: 100%;
+}
+.inline-label {
+  --calcite-label-margin-bottom: 0;
+  margin-inline: 12px;
+  align-self: center;
+}
+#download {
+  align-self: center;
+  margin-inline-end: 12px;
+}

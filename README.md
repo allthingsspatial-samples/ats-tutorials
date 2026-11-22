@@ -16,6 +16,7 @@ samples/
   05-geoparquet-parquetlayer/  # Overture places GeoParquet in a ParquetLayer (beta): filter, query, hitTest (BLD-S02E01)
   06-routing-directions/  # turn-by-turn directions with the Directions component; needs your own API key, runs keyless in CI (BLD-S02E02)
   08-calcite-app-shell/  # a full app layout with Calcite: shell, action bar, panels, dark mode (BLD-S02E04)
+  10-selection-table/  # Selection Toolbar + Selection List + Feature Table in sync, built-in CSV export (BLD-S02E06)
   <nn-topic>/       # one folder per episode sample, added with the episode
 python/
   con-04-mapclassify-breaks/  # Python companion: four mapclassify classifications of one county variable (CON-S01E04)
