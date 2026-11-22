@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 06 Routing and Directions</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Turn-by-turn directions" description="ArcGIS Maps SDK for JavaScript 5.2"></calcite-navigation-logo>
+      </calcite-navigation>
+
+      <!-- Start panel: main.js adds the Directions component here when a key is set. -->
+      <calcite-shell-panel slot="panel-start" id="start-panel" width="l">
+        <calcite-panel heading="Directions" id="directions-panel">
+          <!-- Shown only when there is no key: how to add one. -->
+          <calcite-notice id="no-key" kind="warning" icon="key" width="full" hidden>
+            <div slot="title">Add your key</div>
+            <div slot="message">Directions need an ArcGIS Location Platform API key with the routing, geocoding (not stored) and basemaps privileges. Copy .env.example to .env.local, paste your key after VITE_ARCGIS_TOKEN=, then restart npm run dev.</div>
+          </calcite-notice>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <!-- The map fills the rest of the page. Denver, Colorado. -->
+      <arcgis-map id="map" center="-105.05, 39.72" zoom="10"></arcgis-map>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
