@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 07 Geocoding and Search</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Address search and reverse geocoding" description="ArcGIS Maps SDK for JavaScript 5.2"></calcite-navigation-logo>
+      </calcite-navigation>
+
+      <calcite-shell-panel slot="panel-start" id="start-panel" width="l">
+        <calcite-panel heading="Geocoding">
+          <!-- Shown only when there is no key: how to add one (main.js sets open). -->
+          <calcite-notice id="no-key" kind="warning" icon="key" width="full">
+            <div slot="title">Add your key</div>
+            <div slot="message">Search and geocoding need an ArcGIS Location Platform API key with the geocoding (not stored), geocoding (stored) and basemaps privileges. Copy .env.example to .env.local, paste your key after VITE_ARCGIS_TOKEN=, then restart npm run dev.</div>
+          </calcite-notice>
+
+          <!-- Reverse geocoding: click the map, get the nearest address. -->
+          <section class="section" id="reverse-section">
+            <h2>Click the map</h2>
+            <p id="reverse-result" class="result">Click anywhere on the map to get the nearest address.</p>
+          </section>
+
+          <!-- Batch geocoding: every address in public/data/capitols.csv in one request. -->
+          <section class="section" id="batch-section">
+            <h2>Batch geocode a list</h2>
+            <p class="hint" id="batch-hint">Ten state capitols from public/data/capitols.csv, sent in one request.</p>
+            <calcite-button id="run-batch" icon-start="pin-plus" width="full" disabled>Geocode the list</calcite-button>
+            <calcite-table id="results" caption="Batch geocoding results" bordered striped>
+              <calcite-table-row slot="table-header">
+                <calcite-table-header heading="Score"></calcite-table-header>
+                <calcite-table-header heading="Capitol"></calcite-table-header>
+                <calcite-table-header heading="Match type"></calcite-table-header>
+              </calcite-table-row>
+            </calcite-table>
+          </section>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <!-- The map fills the rest of the page. Downtown Denver, Colorado. -->
+      <arcgis-map id="map" center="-104.9903, 39.7392" zoom="15"></arcgis-map>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

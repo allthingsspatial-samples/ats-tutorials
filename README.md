@@ -15,6 +15,7 @@ samples/
   04-custom-map-controls/  # your own zoom, home and basemap buttons, no widgets (BLD-S01E04)
   05-geoparquet-parquetlayer/  # Overture places GeoParquet in a ParquetLayer (beta): filter, query, hitTest (BLD-S02E01)
   06-routing-directions/  # turn-by-turn directions with the Directions component; needs your own API key, runs keyless in CI (BLD-S02E02)
+  07-geocoding-search/  # address search, reverse geocoding and a capped batch geocode; needs your own API key, runs keyless in CI (BLD-S02E03)
   08-calcite-app-shell/  # a full app layout with Calcite: shell, action bar, panels, dark mode (BLD-S02E04)
   10-selection-table/  # Selection Toolbar + Selection List + Feature Table in sync, built-in CSV export (BLD-S02E06)
   <nn-topic>/       # one folder per episode sample, added with the episode
