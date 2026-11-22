@@ -1,0 +1,36 @@
+// ExpressionContent: return a whole popup element, here a "fields" table
+// that ranks the three decades in which the most homes were built.
+var decades = [
+  ["2020 or later", $feature.B25034_002E],
+  ["2010s", $feature.B25034_003E],
+  ["2000s", $feature.B25034_004E],
+  ["1990s", $feature.B25034_005E],
+  ["1980s", $feature.B25034_006E],
+  ["1970s", $feature.B25034_007E],
+  ["1960s", $feature.B25034_008E],
+  ["1950s", $feature.B25034_009E],
+  ["1940s", $feature.B25034_010E],
+  ["1939 or earlier", $feature.B25034_011E]
+];
+// Arcade has no inline function expressions: Sort takes a declared function.
+function byCountDescending(a, b) {
+  return b[1] - a[1];
+}
+var ranked = Sort(decades, byCountDescending);
+var total = $feature.B25034_001E;
+
+var attributes = Dictionary();
+var fieldInfos = [];
+for (var i = 0; i < 3; i++) {
+  var key = "rank" + (i + 1);
+  var share = IIf(total > 0, Round(ranked[i][1] / total * 100), 0);
+  attributes[key] = Text(ranked[i][1], "#,###") + " homes (" + share + "%)";
+  Push(fieldInfos, { fieldName: key, label: ranked[i][0] });
+}
+
+return {
+  type: "fields",
+  title: "Busiest building decades",
+  fieldInfos: fieldInfos,
+  attributes: attributes
+};

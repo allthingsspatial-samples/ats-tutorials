@@ -1,0 +1,7 @@
+// Share of all housing units built before 1970, as a whole-number percentage.
+var total = $feature.B25034_001E;
+if (IsEmpty(total) || total == 0) {
+  return null;
+}
+var older = $feature.B25034_008E + $feature.B25034_009E + $feature.B25034_010E + $feature.B25034_011E;
+return Round(older / total * 100);

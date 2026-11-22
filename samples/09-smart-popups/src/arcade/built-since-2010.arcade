@@ -1,0 +1,3 @@
+// Housing units built in 2010 or later, formatted with a thousands separator.
+var newer = $feature.B25034_002E + $feature.B25034_003E;
+return Text(newer, "#,###");

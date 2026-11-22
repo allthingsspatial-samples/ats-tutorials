@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 09 Smart Popups</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="When were the homes built?" description="ACS 5-year estimates by county"></calcite-navigation-logo>
+        <calcite-label slot="content-end" layout="inline" id="mode-label">
+          Panel mode
+          <calcite-switch id="panel-mode"></calcite-switch>
+        </calcite-label>
+      </calcite-navigation>
+
+      <arcgis-map id="map" basemap="gray-vector" center="-98, 39" zoom="5">
+        <!-- The popup component (beta). Slotted into the map's popup slot, it opens on click. -->
+        <arcgis-popup slot="popup" include-default-actions-disabled>
+          <!-- actions-end slot (5.2): a Calcite action at the end of the popup's action bar. -->
+          <calcite-action slot="actions-end" id="zoom-action" icon="zoom-to-object" text="Zoom to"></calcite-action>
+        </arcgis-popup>
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+      </arcgis-map>
+
+      <!-- Panel mode: clicks list every popup feature here instead of opening the popup. -->
+      <calcite-shell-panel slot="panel-end" id="end-panel" width="l" collapsed>
+        <calcite-panel heading="Features at the click" id="results-panel">
+          <calcite-list id="results" label="Features at the click" selection-mode="single-persist"></calcite-list>
+          <arcgis-feature id="feature" reference-element="map"></arcgis-feature>
+          <calcite-notice id="hint" open kind="brand" icon="cursor-click">
+            <span slot="message">Click a county. Every feature with a popup under the click is listed here.</span>
+          </calcite-notice>
+        </calcite-panel>
+      </calcite-shell-panel>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

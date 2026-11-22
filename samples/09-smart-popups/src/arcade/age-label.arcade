@@ -1,0 +1,12 @@
+// A plain-language label from the median year built.
+var median = $feature.B25035_001E;
+if (IsEmpty(median) || median == 0) {
+  return "no estimate";
+}
+if (median < 1960) {
+  return "an older housing stock";
+}
+if (median < 1990) {
+  return "a mid-century housing stock";
+}
+return "a newer housing stock";
