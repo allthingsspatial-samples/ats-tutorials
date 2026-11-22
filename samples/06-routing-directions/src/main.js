@@ -36,7 +36,7 @@ if (mode === "key") {
   // No key: a basemap that needs no key, the notice, and no Directions component,
   // so no routing or geocoding request is ever sent without a key.
   mapElement.basemap = "gray-vector";
-  document.querySelector("#no-key").hidden = false;
+  document.querySelector("#no-key").open = true;
 }
 
 await mapElement.viewOnReady();

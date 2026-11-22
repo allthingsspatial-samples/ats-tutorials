@@ -5,7 +5,8 @@ export default async function checks(page) {
   const s = await page.evaluate(() => ({
     mode: window.__atsSample?.mode,
     directions: document.querySelector("arcgis-directions") !== null,
-    notice: document.querySelector("#no-key")?.hidden === false,
+    // open, and actually drawn (a notice that is not open has no height)
+    notice: document.querySelector("#no-key")?.open === true && document.querySelector("#no-key").getBoundingClientRect().height > 40,
   }));
   if (s.mode !== "no-key") problems.push(`expected mode "no-key", got "${s.mode}"`);
   if (s.directions) problems.push("arcgis-directions is in the page without a key");
