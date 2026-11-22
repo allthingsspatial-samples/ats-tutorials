@@ -14,6 +14,7 @@ samples/
   03-clip-geotiff/      # draw a box, clip USGS 3DEP elevation, save a GeoTIFF (BLD-S01E03)
   04-custom-map-controls/  # your own zoom, home and basemap buttons, no widgets (BLD-S01E04)
   05-geoparquet-parquetlayer/  # Overture places GeoParquet in a ParquetLayer (beta): filter, query, hitTest (BLD-S02E01)
+  08-calcite-app-shell/  # a full app layout with Calcite: shell, action bar, panels, dark mode (BLD-S02E04)
   <nn-topic>/       # one folder per episode sample, added with the episode
 python/
   con-04-mapclassify-breaks/  # Python companion: four mapclassify classifications of one county variable (CON-S01E04)

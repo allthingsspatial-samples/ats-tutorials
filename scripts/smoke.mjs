@@ -6,6 +6,7 @@
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import puppeteer from "puppeteer";
 
 const sampleDir = process.argv[2];
@@ -54,6 +55,7 @@ const url = `http://127.0.0.1:${server.address().port}/`;
 
 const problems = [];
 let requests = 0;
+let extra = "";
 const browser = await puppeteer.launch({
   headless: true,
   // Software WebGL so the map can draw on CI runners with no GPU.
@@ -79,6 +81,13 @@ try {
   await page.waitForFunction(() => window.view?.ready === true, { timeout: TIMEOUT_MS });
   // Let the first basemap tiles arrive so their errors, if any, are caught.
   await page.waitForFunction(() => window.view?.updating === false, { timeout: TIMEOUT_MS });
+  // Optional per-sample checks: <sample>/smoke.checks.mjs exports default async (page) => [problems].
+  const checksFile = path.resolve(sampleDir, "smoke.checks.mjs");
+  if (fs.existsSync(checksFile)) {
+    const { default: checks } = await import(pathToFileURL(checksFile).href);
+    for (const p of await checks(page)) problems.push(`check: ${p}`);
+    extra = " + sample checks";
+  }
 } catch (e) {
   problems.push(`smoke: ${e.message}`);
 } finally {
@@ -91,4 +100,4 @@ if (problems.length) {
   for (const p of problems) console.error(`  - ${p}`);
   process.exit(1);
 }
-console.log(`PASS ${sampleDir}: view ready, 0 console errors, 0 token requests, ${requests} requests`);
+console.log(`PASS ${sampleDir}: view ready, 0 console errors, 0 token requests, ${requests} requests${extra}`);

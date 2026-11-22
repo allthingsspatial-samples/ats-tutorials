@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 08 Calcite App Shell</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <!-- Header slot: the app's title bar. -->
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Earthquakes, past 7 days" description="USGS feed, magnitude 2.5 and up"></calcite-navigation-logo>
+        <calcite-action slot="content-end" id="theme" icon="moon" text="Dark mode"></calcite-action>
+      </calcite-navigation>
+
+      <!-- Start panel: an action bar plus one panel per action. -->
+      <calcite-shell-panel slot="panel-start" id="start-panel">
+        <calcite-action-bar slot="action-bar">
+          <calcite-action data-panel="layers" icon="layers" text="Layers"></calcite-action>
+          <calcite-action data-panel="legend" icon="legend" text="Legend"></calcite-action>
+          <calcite-action data-panel="about" icon="information" text="About"></calcite-action>
+        </calcite-action-bar>
+        <calcite-panel data-panel="layers" heading="Layers" closable hidden>
+          <arcgis-layer-list reference-element="map"></arcgis-layer-list>
+        </calcite-panel>
+        <calcite-panel data-panel="legend" heading="Legend" closable hidden>
+          <arcgis-legend reference-element="map"></arcgis-legend>
+        </calcite-panel>
+        <calcite-panel data-panel="about" heading="About" closable hidden>
+          <div id="about" style="padding: 0 12px">
+            <p>Every earthquake of magnitude 2.5 or more in the past 7 days, from the USGS Earthquake Hazards Program.</p>
+            <p id="count">Loading...</p>
+            <p>Click an earthquake to see its details in the end panel.</p>
+          </div>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <!-- Default slot: the map fills the space between the panels. -->
+      <arcgis-map id="map" basemap="gray-vector" center="-120, 38" zoom="4"></arcgis-map>
+
+      <!-- End panel: details of the clicked feature. -->
+      <calcite-shell-panel slot="panel-end" id="end-panel" collapsed>
+        <calcite-panel heading="Details" id="details-panel" closable>
+          <arcgis-feature id="feature" reference-element="map"></arcgis-feature>
+        </calcite-panel>
+      </calcite-shell-panel>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

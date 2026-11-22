@@ -1,0 +1,12 @@
+/* The whole layout comes from Calcite. This file only sizes the page and sets the theme. */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Calcite 5.2: the CSS color-scheme property picks light or dark for every component below it. */
+:root {
+  color-scheme: light;
+}
