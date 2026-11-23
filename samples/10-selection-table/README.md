@@ -23,7 +23,7 @@ All three work on the map's selection manager (`arcgisMap.selectionManager`, lab
 
 ## Selection Toolbar
 
-The toolbar finds the selectable layers in the view by itself; nothing to configure for a layer added to the map. Its tools add to, remove from or replace the selection (the dropdown at its start). The same selection can be set in code:
+The toolbar finds the selectable layers in the view by itself; nothing to configure for a layer added to the map. Its tools add to, remove from or replace the selection (the dropdown at its start). With the lasso, drag a loop around the features and double-click to finish it: in 5.2.7 the lasso is the polygon tool in hybrid mode, so the drag alone leaves the shape open and selects nothing yet. The same selection can be set in code:
 
 ```js
 mapElement.selectionManager.replace(quakes, [objectId1, objectId2, objectId3]);
