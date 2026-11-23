@@ -1,0 +1,18 @@
+// Dynamic choices for "Description of Damage" (form expression, returnType "dictionary").
+// The list depends on the value already picked in "Primary Cause of Damage".
+var byCause = {
+  "Flood": ["Water above floor level", "Water in basement only", "Foundation scoured"],
+  "Fire": ["Smoke damage only", "Roof burned", "Interior burned"],
+  "Wind": ["Shingles or siding lost", "Roof lifted", "Tree on structure"],
+  "Earthquake": ["Cracked walls", "Chimney fallen", "Shifted off foundation"]
+};
+var cause = $feature.primcause;
+var names = ["Describe in comments"];
+if (!IsEmpty(cause) && HasKey(byCause, cause)) {
+  names = byCause[cause];
+}
+var choices = [];
+for (var i in names) {
+  Push(choices, { name: names[i], code: names[i] });
+}
+return { choices: choices };

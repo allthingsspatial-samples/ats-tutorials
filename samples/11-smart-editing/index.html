@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 11 Smart Editing Forms</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Smart editing forms" description="Esri public sample service: shared, reset from time to time"></calcite-navigation-logo>
+      </calcite-navigation>
+
+      <arcgis-map id="map" basemap="gray-vector" center="-117.19, 34.06" zoom="13">
+        <arcgis-zoom slot="bottom-start"></arcgis-zoom>
+      </arcgis-map>
+
+      <!-- Editor component (4.28+): create, update and delete, using the layer's form template. -->
+      <calcite-shell-panel slot="panel-end" width="l">
+        <calcite-panel>
+          <arcgis-editor reference-element="map"></arcgis-editor>
+        </calcite-panel>
+      </calcite-shell-panel>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
