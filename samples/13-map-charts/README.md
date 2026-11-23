@@ -2,7 +2,7 @@
 
 A map of U.S. counties with two live charts beside it, both built from the same layer: a histogram of median household income and a bar chart that counts counties by state. Both charts show only the counties in view, so they redraw when you pan or zoom. Select bars or bins and the matching counties are selected on the map. One switch turns on dark mode for the app and the charts. It goes with the ATS Build episode BLD-S02E09, "Charts Beside the Map in JavaScript (ArcGIS JS 5.2)".
 
-- Data: Esri Living Atlas "ACS Median Household Income (Latest)" (item c9faa265b82848498bc0a8390c0afa65), county layer: U.S. Census Bureau American Community Survey 5-year estimates, 3,222 counties. Public, no sign-in. "Latest" means Esri moves the layer to each new ACS release (2020-2024 when this sample was written), so the numbers change about once a year.
+- Data: Esri Living Atlas "ACS Median Household Income (Latest)" (item c9faa265b82848498bc0a8390c0afa65), county layer: U.S. Census Bureau American Community Survey 5-year estimates, 3,222 counties. Public, no sign-in. "Latest" means Esri moves the layer to each new ACS release (2020-2024 when this sample was written), so the numbers change about once a year (Esri: "usually in December"). The header says "latest release" for that reason.
 - SDK: `@arcgis/core`, `@arcgis/map-components` and `@arcgis/charts-components` 5.2.8, `@esri/calcite-components` 5.2.1 (the version 5.2.8 asks for). All pinned exactly. No API key.
 - Build tool: Vite
 
@@ -22,7 +22,7 @@ npm run dev
 ## Two things that tripped us up
 
 - **Import path.** The docs import `createModel` from `@arcgis/charts-components/model/shared/setup-utils.js`. With npm and Vite, that path fails the build ("not exported"); the package exports it without `.js`: `@arcgis/charts-components/model/shared/setup-utils`.
-- **Dark mode and the build target.** Calcite's colors use the CSS `light-dark()` function. With Vite's default CSS target the build rewrites `light-dark()` into a fallback that ignores a `color-scheme` set from JavaScript, so the switch did nothing. `vite.config.js` sets a newer `build.cssTarget` (as in sample 08) so `light-dark()` stays native.
+- **Dark mode and the build target.** Calcite's colors use the CSS `light-dark()` function. With Vite's default CSS target the build rewrites `light-dark()` into a fallback that ignores a `color-scheme` set from JavaScript, so the switch did nothing. `vite.config.js` sets a newer `build.cssTarget` (as in sample 08) so `light-dark()` stays native. That target sets the browser floor: Chrome and Edge 123, Firefox 120, Safari 17.5.
 
 ## A chart saved in a web map (5.2 reference element)
 
