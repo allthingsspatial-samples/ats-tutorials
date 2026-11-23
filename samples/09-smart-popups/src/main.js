@@ -32,6 +32,9 @@ const panelSwitch = document.querySelector("#panel-mode");
 
 await mapElement.viewOnReady();
 
+// Dock the popup at the top right on every screen size, with no undock button.
+popupElement.dockOptions = { buttonEnabled: false, breakpoint: false, position: "top-right" };
+
 const counties = new FeatureLayer({
   url: `${SERVICE_URL}/1`,
   title: "Counties",

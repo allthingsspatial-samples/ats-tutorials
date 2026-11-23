@@ -18,8 +18,9 @@
       </calcite-navigation>
 
       <arcgis-map id="map" basemap="gray-vector" center="-98, 39" zoom="5">
-        <!-- The popup component (beta). Slotted into the map's popup slot, it opens on click. -->
-        <arcgis-popup slot="popup" include-default-actions-disabled>
+        <!-- The popup component (beta). Slotted into the map's popup slot, it opens on click.
+             dock-enabled docks it to a corner of the view, so the text, the table and the chart fit. -->
+        <arcgis-popup slot="popup" dock-enabled include-default-actions-disabled>
           <!-- actions-end slot (5.2): a Calcite action at the end of the popup's action bar. -->
           <calcite-action slot="actions-end" id="zoom-action" icon="zoom-to-object" text="Zoom to"></calcite-action>
         </arcgis-popup>
