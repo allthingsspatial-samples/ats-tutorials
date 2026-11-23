@@ -1,6 +1,6 @@
 # 11 Smart Editing Forms: Dynamic Choices and Photo Attachments
 
-An editing app where the form reacts to what you enter. A dropdown's choices depend on the field before it (an Arcade expression, new in 5.2), one field appears and becomes required only for one answer, another becomes required once the damage is serious, and photos are attached inside the form itself (5.1). All of it is a `FormTemplate` on the layer. The `arcgis-editor` component reads that template; there is no form code of our own. It goes with the ATS Build episode BLD-S02E07, "Smart Editing Forms with Arcade (ArcGIS JS 5.2)".
+An editing app where the form reacts to what you enter. A dropdown's choices depend on the field before it (an Arcade expression, new in 5.2), one field appears and becomes required only for some answers, another becomes required once the damage is serious, and photos are attached inside the form itself (5.1). All of it is a `FormTemplate` on the layer. The `arcgis-editor` component builds the form from that template, so we write no input controls ourselves. It goes with the ATS Build episode BLD-S02E07, "Smart Editing Forms with Arcade (ArcGIS JS 5.2)".
 
 - SDK: `@arcgis/core` and `@arcgis/map-components` 5.2.7, `@esri/calcite-components` 5.2.1 (the version map-components 5.2.7 asks for). All pinned exactly. No API key.
 - Build tool: Vite
@@ -17,7 +17,7 @@ The data is Esri's public sample service "DamageAssessment", layer 0 (https://sa
 - anyone can add, change or delete features there, and Esri resets the service from time to time, so the map will not match the episode;
 - what other people typed is not yours to show: frame your own feature;
 - delete what you add (select it, then Delete in the Editor) when you are done;
-- the layer has contact fields (names, phones, e-mail). The form in this sample lists only damage and occupancy fields, so those never appear here. Do not type real personal details into a public service.
+- the layer has contact fields (names, phones, e-mail). The form in this sample lists only damage and occupancy fields, so those never appear in it. The service names features by first name, so `main.js` sets the layer's `displayField` to the extent of damage: lists in the Editor show "Minor", "Major" and so on, not a name. Do not type real personal details into a public service.
 
 To keep your own data, point the sample at your own editable layer (see the end).
 
@@ -30,7 +30,7 @@ To keep your own data, point the sample at your own editable layer (see the end)
 | Damage group | `typdamage` (Extent of damage) | dropdown from the layer's coded-value domain |
 | | `primcause` (Primary cause) | dropdown from the layer's coded-value domain |
 | | `descdamage` (Description of damage) | **dynamic choices** from `src/arcade/choices.arcade`, based on the primary cause |
-| | `comments` | shown, and required, only when the cause is "Other" |
+| | `comments` | shown, and required, only for a cause with no preset descriptions (Landslide, Rain, Snow, Other) |
 | Occupancy group | `habitable` | required when the extent is Major or Destroyed |
 | | `numoccup` | shown only when Habitable is "Yes" |
 | Photos | (attachments) | an attachment element: up to 3 images, inside the form |

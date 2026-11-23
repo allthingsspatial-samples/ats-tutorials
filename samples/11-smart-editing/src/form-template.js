@@ -14,7 +14,13 @@ export function createFormTemplate() {
       // 5.2: a dictionary expression that returns { choices: [{ name, code }] }.
       { name: "damage-choices", title: "Damage choices", expression: choicesExpression, returnType: "dictionary" },
       // Rules: Arcade expressions that return true or false.
-      { name: "cause-is-other", title: "Cause is Other", expression: '$feature.primcause == "Other"', returnType: "boolean" },
+      // True for a cause with no preset descriptions (Landslide, Rain, Snow, Other); false while no cause is picked.
+      {
+        name: "needs-comments",
+        title: "Cause needs comments",
+        expression: '!IsEmpty($feature.primcause) && !Includes(["Flood", "Fire", "Wind", "Earthquake"], $feature.primcause)',
+        returnType: "boolean",
+      },
       { name: "major-or-worse", title: "Major or destroyed", expression: 'Includes(["Major", "Destroyed"], $feature.typdamage)', returnType: "boolean" },
       { name: "is-habitable", title: "Habitable", expression: '$feature.habitable == "Yes"', returnType: "boolean" },
     ],
@@ -37,9 +43,9 @@ export function createFormTemplate() {
             type: "field",
             fieldName: "comments",
             label: "Comments",
-            // Shown only when the cause is "Other", and then it must be filled in.
-            visibilityExpression: "cause-is-other",
-            requiredExpression: "cause-is-other",
+            // Shown only for a cause with no preset descriptions, and then it must be filled in.
+            visibilityExpression: "needs-comments",
+            requiredExpression: "needs-comments",
             input: { type: "text-area" },
           },
         ],

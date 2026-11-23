@@ -22,6 +22,9 @@ await mapElement.viewOnReady();
 const damage = new FeatureLayer({
   url: DAMAGE_URL,
   title: "Damage reports",
+  // The service names features by a contact field (first name). Name them by the extent of damage
+  // instead, so lists in the Editor never show someone's name.
+  displayField: "typdamage",
   outFields: ["*"],
   // The Editor reads the form from the layer.
   formTemplate: createFormTemplate(),
