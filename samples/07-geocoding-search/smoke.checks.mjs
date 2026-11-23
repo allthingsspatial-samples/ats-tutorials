@@ -16,7 +16,7 @@ export default async function checks(page) {
   if (s.rows !== 10) problems.push(`expected 10 rows from capitols.csv, got ${s.rows}`);
   if (s.tableRows !== 10) problems.push(`expected 10 table rows, got ${s.tableRows}`);
   if (s.search) problems.push("arcgis-search is in the page without a key");
-  if (!s.batchDisabled) problems.push("the batch button is enabled without a key");
+  if (!s.batchDisabled) problems.push("the list button is enabled without a key");
   if (!s.notice) problems.push("the Add your key notice is not shown");
   return problems;
 }

@@ -18,7 +18,7 @@
           <!-- Shown only when there is no key: how to add one (main.js sets open). -->
           <calcite-notice id="no-key" kind="warning" icon="key" width="full">
             <div slot="title">Add your key</div>
-            <div slot="message">Search and geocoding need an ArcGIS Location Platform API key with the geocoding (not stored), geocoding (stored) and basemaps privileges. Copy .env.example to .env.local, paste your key after VITE_ARCGIS_TOKEN=, then restart npm run dev.</div>
+            <div slot="message">Search and geocoding need an ArcGIS Location Platform API key with the geocoding (not stored) and basemaps privileges. Copy .env.example to .env.local, paste your key after VITE_ARCGIS_TOKEN=, then restart npm run dev.</div>
           </calcite-notice>
 
           <!-- Reverse geocoding: click the map, get the nearest address. -->
@@ -27,12 +27,12 @@
             <p id="reverse-result" class="result">Click anywhere on the map to get the nearest address.</p>
           </section>
 
-          <!-- Batch geocoding: every address in public/data/capitols.csv in one request. -->
+          <!-- Geocode a list: each address in public/data/capitols.csv, one not-stored request at a time. -->
           <section class="section" id="batch-section">
-            <h2>Batch geocode a list</h2>
-            <p class="hint" id="batch-hint">Ten state capitols from public/data/capitols.csv, sent in one request.</p>
+            <h2>Geocode a list</h2>
+            <p class="hint" id="batch-hint">Ten state capitols from public/data/capitols.csv, one request per address.</p>
             <calcite-button id="run-batch" icon-start="pin-plus" width="full" disabled>Geocode the list</calcite-button>
-            <calcite-table id="results" caption="Batch geocoding results" bordered striped>
+            <calcite-table id="results" caption="Geocoding results" bordered striped>
               <calcite-table-row slot="table-header">
                 <calcite-table-header heading="Score"></calcite-table-header>
                 <calcite-table-header heading="Capitol"></calcite-table-header>

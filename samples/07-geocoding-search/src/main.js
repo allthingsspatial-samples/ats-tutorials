@@ -14,13 +14,13 @@ import "@esri/calcite-components/components/calcite-table-cell";
 import "@arcgis/map-components/components/arcgis-map";
 import "@arcgis/map-components/components/arcgis-search";
 import esriConfig from "@arcgis/core/config.js";
-import { addressesToLocations, locationToAddress } from "@arcgis/core/rest/locator.js";
+import { addressToLocations, locationToAddress } from "@arcgis/core/rest/locator.js";
 import Graphic from "@arcgis/core/Graphic.js";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer.js";
 
 // The ArcGIS Geocoding service. With an API key, requests go to the geocode-api host.
 const GEOCODE_URL = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
-// Batch geocoding is billed as stored geocoding with no free tier, so the list is capped.
+// Every click geocodes every row again (one request each), so the list is capped.
 const MAX_ROWS = 25;
 
 // Vite reads VITE_ARCGIS_TOKEN from .env.local (git-ignored) and inlines it at build time.
@@ -33,9 +33,9 @@ const runBatch = document.querySelector("#run-batch");
 const table = document.querySelector("#results");
 const state = { mode, rows: 0, reverse: null, batch: null };
 
-// Two graphics layers: the clicked point, and the batch results.
+// Two graphics layers: the clicked point, and the list results.
 const clickLayer = new GraphicsLayer({ title: "Clicked point" });
-const batchLayer = new GraphicsLayer({ title: "Batch results" });
+const batchLayer = new GraphicsLayer({ title: "List results" });
 
 // Read the address list. Each line: name,"street, city, state ZIP".
 async function loadRows() {
@@ -73,7 +73,7 @@ state.rows = rows.length;
 fillTable(rows);
 
 if (mode === "key") {
-  // One key for the whole app: basemap, search, reverse and batch geocoding requests all carry it.
+  // One key for the whole app: basemap, search, reverse geocoding and list requests all carry it.
   esriConfig.apiKey = apiKey;
   // The navigation basemap style needs the basemaps privilege.
   mapElement.basemap = "arcgis/navigation";
@@ -114,32 +114,33 @@ if (mode === "key") {
     }
   });
 
-  // Batch geocoding: every row in one geocodeAddresses request (billed as stored geocoding).
+  // Geocode the list: one findAddressCandidates request per row, not stored (forStorage: false).
+  // These results may be shown on the map, not saved. True batch geocoding (geocodeAddresses, stored results)
+  // needs the separate geocoding (stored) privilege.
   runBatch.addEventListener("click", async () => {
     runBatch.loading = true;
-    const addresses = rows.map((row, i) => ({ OBJECTID: i + 1, SingleLine: row.address }));
-    let candidates;
-    try {
-      candidates = await addressesToLocations(GEOCODE_URL, { addresses, countryCode: "USA" });
-    } catch (error) {
-      // For example HTTP 403 when the key has no geocoding (stored) privilege.
-      document.querySelector("#batch-hint").textContent = `Batch geocoding failed: ${error.message}`;
-      state.batch = { error: error.message };
-      runBatch.loading = false;
-      return;
+    const results = [];
+    for (const row of rows) {
+      try {
+        const [best] = await addressToLocations(GEOCODE_URL, {
+          address: { SingleLine: row.address },
+          countryCode: "USA",
+          maxLocations: 1,
+          forStorage: false,
+          outFields: ["Addr_type"],
+        });
+        results.push({
+          name: row.name,
+          address: row.address,
+          score: best ? Math.round(best.score) : 0,
+          match: best?.address ?? "No match",
+          type: best?.attributes.Addr_type ?? "-",
+          location: best?.location ?? null,
+        });
+      } catch (error) {
+        results.push({ name: row.name, address: row.address, score: 0, match: `Failed: ${error.message}`, type: "-", location: null });
+      }
     }
-    // ResultID matches the OBJECTID you sent, so each result finds its row.
-    const results = candidates.map((c) => {
-      const row = rows[c.attributes.ResultID - 1];
-      return {
-        name: row.name,
-        address: row.address,
-        score: Math.round(c.score),
-        match: c.address,
-        type: c.attributes.Addr_type,
-        location: c.location,
-      };
-    });
     // Lowest score first: those are the matches to check.
     results.sort((a, b) => a.score - b.score);
     batchLayer.removeAll();
