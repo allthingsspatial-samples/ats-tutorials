@@ -14,8 +14,8 @@ import "@arcgis/map-components/components/arcgis-feature-table";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 
-// Esri Living Atlas "USGS Seismic Data": USGS earthquake events, a rolling window of about
-// 90 days, refreshed through the day. Public, no key.
+// Esri Living Atlas "Recent Earthquakes" (item 9e2f2b544c954fda9cd13b7f3e6eebce): USGS events, updated as often as
+// every 5 minutes. Most events stay up to 30 days; below magnitude 4.5, 7 days. Public, no key.
 const QUAKES_URL = "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USGS_Seismic_Data_v1/FeatureServer/0";
 
 const mapElement = document.querySelector("arcgis-map");

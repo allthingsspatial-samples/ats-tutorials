@@ -2,7 +2,7 @@
 
 Draw a rectangle or a lasso on the map with the Selection Toolbar, see what you picked in a Selection List and a Feature Table that stay in sync, and download exactly those rows as a CSV file. No hand-written selection or CSV code: the three components share the map's selection manager, and the export is built into the Feature Table. It goes with the ATS Build episode BLD-S02E06, "Select Features, Table, CSV Export in ArcGIS JS 5.2".
 
-- Data: "USGS Seismic Data" from Esri's Living Atlas, a rolling window of USGS earthquake events (about the past 90 days), https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USGS_Seismic_Data_v1/FeatureServer/0. Source: USGS Earthquake Hazards Program. Public, no sign-in. The layer changes through the day, so your counts will differ from the episode.
+- Data: "Recent Earthquakes" from Esri's Living Atlas (item 9e2f2b544c954fda9cd13b7f3e6eebce, layer https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USGS_Seismic_Data_v1/FeatureServer/0). The item page says events are updated as often as every 5 minutes and kept up to 30 days, except: magnitude below 4.5 for 7 days, significance ("sig") 600 or more for 90 days. Source: USGS Earthquake Hazards Program. Public, no sign-in. The layer changes through the day, so your counts will differ from the episode.
 - SDK: `@arcgis/core` and `@arcgis/map-components` 5.2.7, `@esri/calcite-components` 5.2.1 (the version map-components 5.2.7 asks for). All pinned exactly. No API key.
 - Build tool: Vite
 
