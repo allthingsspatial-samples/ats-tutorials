@@ -10,7 +10,7 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import { createFormTemplate } from "./form-template.js";
 
 // Esri's public sample service "DamageAssessment" (ArcGIS Server, no sign-in). Layer 0 allows
-// anonymous create, update and delete, with attachments. Anyone can edit it and Esri resets it,
+// anonymous create, update and delete, with attachments. Anyone can edit it, and its contents can change at any time,
 // so treat what you see there as test data, and delete what you add.
 const DAMAGE_URL = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0";
 

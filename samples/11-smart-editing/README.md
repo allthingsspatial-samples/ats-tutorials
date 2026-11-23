@@ -14,7 +14,7 @@ npm run dev
 
 The data is Esri's public sample service "DamageAssessment", layer 0 (https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0). It allows anonymous create, update and delete, with attachments, and needs no sign-in. That also means:
 
-- anyone can add, change or delete features there, and Esri resets the service from time to time, so the map will not match the episode;
+- anyone can add, change or delete features there, so the map will not match the episode;
 - what other people typed is not yours to show: frame your own feature;
 - delete what you add (select it, then Delete in the Editor) when you are done;
 - the layer has contact fields (names, phones, e-mail). The form in this sample lists only damage and occupancy fields, so those never appear in it. The service names features by first name, so `main.js` sets the layer's `displayField` to the extent of damage: lists in the Editor show "Minor", "Major" and so on, not a name. Do not type real personal details into a public service.
@@ -49,7 +49,7 @@ expressionInfos: [
 { type: "field", fieldName: "descdamage", input: { type: "dynamic-choice", choiceExpression: "damage-choices" } }
 ```
 
-`src/arcade/choices.arcade` reads `$feature.primcause` (the value in the form, before it is saved) and returns three descriptions for Flood, Fire, Wind or Earthquake, and "Describe in comments" for anything else. Vite imports the file as text (`?raw`). Esri's own sample builds its list with a query against another table (`FeatureSetById` + `Filter`), which works the same way.
+`src/arcade/choices.arcade` reads `$feature.primcause` (the value in the form, before it is saved) and returns three descriptions each for Flood, Fire, Wind and Earthquake, and "Describe in comments" for any other cause (Landslide, Rain, Snow, Other) or none. Vite imports the file as text (`?raw`). Esri's own sample builds its list with a query against another table (`FeatureSetById` + `Filter`), which works the same way.
 
 Checked with 5.2.7: pick Flood and the list is "Water above floor level", "Water in basement only", "Foundation scoured"; change to Wind and it becomes "Shingles or siding lost", "Roof lifted", "Tree on structure". A value picked before the change stays in the field until you pick a new one, so re-check it after changing the cause.
 
@@ -77,7 +77,7 @@ Checked with 5.2.7 on this service: a feature created in the Editor with one pho
 
 ## Smoke test
 
-`smoke.checks.mjs` checks that `arcgis-editor` is defined and runs the in-page self-test (`window.__atsSample.selfTest()`): the form has a field element with a `dynamic-choice` input whose `choiceExpression` is in `expressionInfos`, an attachment element, `supportsAttachmentElements === true`, and the layer reports add and attachment support. It only reads: CI never writes to the shared service. The add, attach and delete round trip was checked by hand in a local browser.
+`smoke.checks.mjs` checks that `arcgis-editor` is defined and runs the in-page self-test (`window.__atsSample.selfTest()`): the form has a field element with a `dynamic-choice` input whose `choiceExpression` is in `expressionInfos`, an attachment element, `supportsAttachmentElements === true`, and the layer reports add and attachment support. It only reads: CI never writes to the shared service. The add, attach and delete round trip was checked locally, in a scripted browser run with real clicks on the Editor (Create, then Delete and confirm).
 
 ## Use your own layer
 

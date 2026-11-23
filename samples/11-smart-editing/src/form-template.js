@@ -6,7 +6,7 @@ import choicesExpression from "./arcade/choices.arcade?raw";
 export function createFormTemplate() {
   return new FormTemplate({
     title: "Damage report",
-    description: "Esri public sample service: shared and reset from time to time.",
+    description: "Esri public sample service: shared, anyone can edit it.",
     // 5.1: attachments become part of the form. With this on, attachments that no
     // attachment element matches are not shown at all.
     supportsAttachmentElements: true,
