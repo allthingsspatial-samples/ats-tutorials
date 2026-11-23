@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 13 Map Charts</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Charts beside the map" description="Median household income by county (U.S. Census ACS 2020-2024)"></calcite-navigation-logo>
+        <calcite-label slot="content-end" layout="inline" id="dark-label">
+          Dark mode
+          <calcite-switch id="dark-switch"></calcite-switch>
+        </calcite-label>
+      </calcite-navigation>
+
+      <arcgis-map id="map">
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+      </arcgis-map>
+
+      <!-- The charts sit beside the map. reference-element="map" connects each chart to the map's view. -->
+      <calcite-shell-panel slot="panel-end" id="chart-panel" width="l">
+        <calcite-panel heading="Counties in view">
+          <div id="charts">
+            <arcgis-chart id="histogram" reference-element="map" filter-by-view-extent sync-view-selection>
+              <arcgis-charts-action-bar slot="action-bar"></arcgis-charts-action-bar>
+            </arcgis-chart>
+            <arcgis-chart id="bar-chart" reference-element="map" filter-by-view-extent sync-view-selection>
+              <arcgis-charts-action-bar slot="action-bar"></arcgis-charts-action-bar>
+            </arcgis-chart>
+            <!-- 5.2 reference element: a chart saved on the layer in the web map. No chart settings in code. -->
+            <div id="saved-chart-wrap" hidden>
+              <arcgis-chart id="saved-chart" reference-element="map" chart-index="0" filter-by-view-extent sync-view-selection>
+                <arcgis-charts-action-bar slot="action-bar"></arcgis-charts-action-bar>
+              </arcgis-chart>
+            </div>
+          </div>
+        </calcite-panel>
+      </calcite-shell-panel>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

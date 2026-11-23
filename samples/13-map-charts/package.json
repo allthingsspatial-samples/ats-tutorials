@@ -1,0 +1,20 @@
+{
+  "name": "ats-13-map-charts",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@arcgis/charts-components": "5.2.8",
+    "@arcgis/core": "5.2.8",
+    "@arcgis/map-components": "5.2.8",
+    "@esri/calcite-components": "5.2.1"
+  },
+  "devDependencies": {
+    "vite": "8.3.5"
+  }
+}

@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+/* Calcite 5.2 picks light or dark from color-scheme. One class switches the app: Calcite follows color-scheme,
+   and the charts follow the calcite-mode-dark class on a parent. Keep color-scheme in this stylesheet (not an inline
+   style): the Vite build rewrites Calcite's light-dark() colors so they switch only on stylesheet rules. */
+:root {
+  color-scheme: light;
+}
+.calcite-mode-dark {
+  color-scheme: dark;
+}
+#saved-chart-wrap[hidden] {
+  display: none;
+}
+#chart-panel {
+  --calcite-shell-panel-width: 560px;
+}
+#charts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+arcgis-chart {
+  height: 300px;
+}
+#dark-label {
+  align-self: center;
+  margin-inline-end: 12px;
+  --calcite-label-margin-bottom: 0;
+}
