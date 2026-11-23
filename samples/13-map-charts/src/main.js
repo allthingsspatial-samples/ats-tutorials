@@ -88,9 +88,10 @@ if (WEBMAP_ID) {
   savedChart.parentElement.remove(); // no web map, no saved chart
 }
 
-// 5. Dark mode: one class on the html element (see style.css). The basemap is part of the map, so it is swapped too.
+// 5. Dark mode: one CSS property, color-scheme, on the html element. Calcite and the charts both follow it.
+//    The basemap is map content, not UI, so it is swapped too.
 function setDark(dark) {
-  document.documentElement.classList.toggle("calcite-mode-dark", dark);
+  document.documentElement.style.colorScheme = dark ? "dark" : "light";
   if (!WEBMAP_ID) mapElement.basemap = dark ? "dark-gray-vector" : "gray-vector";
 }
 darkSwitch.addEventListener("calciteSwitchChange", () => setDark(darkSwitch.checked));

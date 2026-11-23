@@ -4,14 +4,10 @@ body {
   padding: 0;
   height: 100%;
 }
-/* Calcite 5.2 picks light or dark from color-scheme. One class switches the app: Calcite follows color-scheme,
-   and the charts follow the calcite-mode-dark class on a parent. Keep color-scheme in this stylesheet (not an inline
-   style): the Vite build rewrites Calcite's light-dark() colors so they switch only on stylesheet rules. */
+/* Calcite 5.2 picks light or dark from the CSS color-scheme property (the calcite-mode classes are deprecated).
+   main.js sets it on the html element; vite.config.js keeps Calcite's light-dark() colors native so that works. */
 :root {
   color-scheme: light;
-}
-.calcite-mode-dark {
-  color-scheme: dark;
 }
 #saved-chart-wrap[hidden] {
   display: none;

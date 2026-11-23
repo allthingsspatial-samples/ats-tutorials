@@ -17,12 +17,12 @@ npm run dev
 2. **Histogram model.** `createModel({ layer, chartType: "histogram" })` makes a model from the layer; `numericField` picks the field (`B19049_001E`, median household income). `binCount` is 32, the default; a histogram can have up to 64 bins.
 3. **Bar chart model.** A second `<arcgis-chart>` gets `createModel({ layer, chartType: "barChart" })` with `xAxisField = "State"`. With no numeric field a bar chart counts features, so each bar is the number of counties in that state. `rotated` lays the bars on their side and `setSortOrder("yAxisDesc")` puts the biggest count first.
 4. **Map and charts in sync.** Each chart has `reference-element="map"` (5.2), the id of the `<arcgis-map>`, which connects it to the map's view from anywhere on the page. `filter-by-view-extent` limits the chart to features in the current extent; `sync-view-selection` (5.1) shares selections with the view's selection manager, so selecting bars selects counties on the map.
-5. **Dark mode.** One class, `calcite-mode-dark`, on the `<html>` element. `style.css` gives that class `color-scheme: dark`: Calcite 5.2 follows `color-scheme`, and the charts follow `calcite-mode-dark` on a parent (5.1 theming, which uses Calcite's CSS variables). The basemap is part of the map, so `main.js` swaps it too.
+5. **Dark mode.** One CSS property, `color-scheme`, on the `<html>` element: `main.js` sets it to `dark` or `light`. Calcite 5.2 follows `color-scheme` (its `calcite-mode-*` classes are deprecated), and the charts follow too, because they draw with Calcite's color variables. The basemap is map content, not UI, so `main.js` swaps it too.
 
 ## Two things that tripped us up
 
 - **Import path.** The docs import `createModel` from `@arcgis/charts-components/model/shared/setup-utils.js`. With npm and Vite, that path fails the build ("not exported"); the package exports it without `.js`: `@arcgis/charts-components/model/shared/setup-utils`.
-- **Dark mode class placement.** The Vite build rewrites Calcite's `light-dark()` colors into variables that switch only through `color-scheme` rules in a stylesheet, and Calcite's colors are set on `:root`. So put the class on `<html>`, and set `color-scheme` in CSS, not as an inline style. With the class on `<body>`, nothing turned dark in our build.
+- **Dark mode and the build target.** Calcite's colors use the CSS `light-dark()` function. With Vite's default CSS target the build rewrites `light-dark()` into a fallback that ignores a `color-scheme` set from JavaScript, so the switch did nothing. `vite.config.js` sets a newer `build.cssTarget` (as in sample 08) so `light-dark()` stays native.
 
 ## A chart saved in a web map (5.2 reference element)
 
