@@ -35,7 +35,7 @@ A `media` element holds a `bar-chart` and a `pie-chart`. `value.fields` lists th
 
 ## The popup component (beta)
 
-`<arcgis-popup>` sits in the map's `popup` slot. It is labelled beta in 5.2. The sample turns off the default actions (`include-default-actions-disabled`) and puts its own Calcite action in the `actions-end` slot (new in 5.2); clicking it zooms to `selectedFeature`. `dock-enabled` plus `dockOptions` (`position: "top-right"`, `breakpoint: false`, `buttonEnabled: false`) keep it docked at the top right, so the text, the table and the chart fit without scrolling. In 5.2 the map's `popup` property is deprecated in favor of `popupElement` / `popup-component-enabled` (both beta) or a slotted `arcgis-popup`.
+`<arcgis-popup>` sits in the map's `popup` slot. It is labelled beta in 5.2. The sample turns off the default actions (`include-default-actions-disabled`) and puts its own Calcite action in the `actions-end` slot (new in 5.2); clicking it zooms to `selectedFeature`. `dock-enabled` plus `dockOptions` (`position: "top-right"`, `breakpoint: false`, `buttonEnabled: false`) keep it docked at the top right, so the text, the table and the chart fit without scrolling. In 5.2.7 the `dock-enabled` attribute alone did not stay set once the map was ready, so `main.js` also sets `popupElement.dockEnabled = true` after `dockOptions`. In 5.2 the map's `popup` property is deprecated in favor of `popupElement` / `popup-component-enabled` (both beta) or a slotted `arcgis-popup`.
 
 ## fetchPopupFeatures in your own panel
 

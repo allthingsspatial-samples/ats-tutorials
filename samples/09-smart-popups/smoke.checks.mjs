@@ -12,10 +12,12 @@ export default async function checks(page) {
     for (let i = 0; i < 60 && !popupEl.selectedFeature; i++) await new Promise((r) => setTimeout(r, 250));
     await new Promise((r) => setTimeout(r, 1500));
     const title = popupEl.selectedFeature?.attributes?.NAME ?? null;
+    const docked = popupEl.dockEnabled;
     await map.closePopup();
     while (map.view.updating) await new Promise((r) => setTimeout(r, 250));
-    return { title };
+    return { title, docked };
   });
   if (!popup.title) problems.push("popup component opened with no selected feature");
+  if (!popup.docked) problems.push("popup component is not docked");
   return problems;
 }
