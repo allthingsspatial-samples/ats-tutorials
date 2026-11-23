@@ -24,7 +24,7 @@ The Time Bar keeps the time properties of the Time Slider and moves the look int
 | `fullTimeExtent`, `timeExtent`, `mode`, `stops`, `playRate`, `loop`, `timeZone` | same names |
 | `play()`, `stop()`, `next()`, `previous()`, `effectiveStops`, `state` | same names |
 | `applyTimeSliderSettings()` | `applyTimeSettings()` |
-| `layout` ("auto", "compact", "wide") | no layout: pick the parts with `show-play`, `show-previous`, `show-next`, `show-settings`, `show-time-extent` |
+| `layout` ("auto", "compact", "wide": the orientation of the parts) | no `layout` property: the look comes from the parts you show (`show-play`, `show-previous`, `show-next`, `show-settings`, `show-time-extent`) and an optional Time Bar Slider |
 | the slider track (always there) | optional: an `arcgis-time-bar-slider` in the `time-extent` slot (shown with `show-time-extent`) |
 | `timeVisible`, `labelFormatFunction` | `format` ("date" or "date-time"), or your own content in the slider's `min`, `max` and `popover` slots |
 | `tickConfigs` | `show-ticks` on the Time Bar Slider, or an `arcgis-ticks` in its `content-end` slot |
@@ -38,13 +38,15 @@ The Time Bar keeps the time properties of the Time Slider and moves the look int
 
 ## Modes
 
-The switch at the top sets the Time Bar's `mode`. Each mode expects its own time extent shape, so `setMode()` in `main.js` sets both:
+The switch at the top sets the Time Bar's `mode`. Each mode expects its own time extent shape, so `setMode()` in `main.js` sets the mode and the extent together:
 
-| Mode | Time extent | Checked in this sample (first day, 20 May 2019 UTC) |
+| Mode | Time extent | Checked in this sample (UTC) |
 |---|---|---|
-| `time-window` (default) | start and end | 91 earthquakes |
-| `instant` | start equals end | 0 earthquakes: an instant matches only features at that exact moment, which suits snapshot data (one record per time step), not events like earthquakes |
-| `cumulative-from-start` | start `null`, end | 91 earthquakes on the first day, growing as you step forward |
+| `time-window` (default) | start and end | 20 May 00:00 to 21 May 00:00: 91 earthquakes |
+| `instant` | start equals end | one earthquake per stop (see below) |
+| `cumulative-from-start` | start `null`, end | everything before the end: 91 up to 21 May 00:00, growing as you step forward |
+
+An instant matches only features at that exact moment. With the daily stops (midnight) no earthquake in this file matches, so instant mode would show an empty map. The Time Bar's stops can also be a list of dates, so in instant mode the sample sets the stops to the times of the 12 earthquakes of magnitude 6 or more (`stops = { dates }`): each instant shows that one earthquake, and Next steps to the next one. The other modes switch back to the daily stops.
 
 The Time Bar also has `cumulative-from-end` (end `null`).
 
@@ -54,7 +56,7 @@ The Time Bar also has `cumulative-from-end` (end `null`).
 
 ## Smoke test
 
-`smoke.checks.mjs` runs the in-page self-test (`window.__atsSample.selfTest()`): `arcgis-time-bar`, `arcgis-time-bar-slider` and `arcgis-feature-table` are defined, the layer has `timeInfo`, the view's `timeExtent` is set once the Time Bar is ready, one `next()` moves `view.timeExtent.start` forward a day (91 then 312 earthquakes), the table has `viewTimeEnabled`, and there are 32 daily stops. The self-test logs `console.error` only on failure, so the standard smoke run fails with it.
+`smoke.checks.mjs` runs the in-page self-test (`window.__atsSample.selfTest()`): `arcgis-time-bar`, `arcgis-time-bar-slider` and `arcgis-feature-table` are defined, the layer has `timeInfo`, the view's `timeExtent` is set once the Time Bar is ready, one `next()` changes `view.timeExtent.start` (the run logs the counts, 91 then 312 earthquakes), the table has `viewTimeEnabled`, there are 32 daily stops and 12 strong-earthquake stops. The self-test logs `console.error` only on failure, so the standard smoke run fails with it.
 
 ## Data note
 
