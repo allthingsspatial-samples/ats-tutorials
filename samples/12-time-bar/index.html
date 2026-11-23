@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Tutorials - 12 Time Bar</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="Time Bar: a map through time" description="USGS earthquakes, 20 May to 19 June 2019 (Esri sample data)"></calcite-navigation-logo>
+        <!-- Mode switch: the Time Bar's mode property. -->
+        <calcite-segmented-control slot="content-end" id="mode" scale="s">
+          <calcite-segmented-control-item value="time-window" checked>Time window</calcite-segmented-control-item>
+          <calcite-segmented-control-item value="instant">Instant</calcite-segmented-control-item>
+          <calcite-segmented-control-item value="cumulative-from-start">Cumulative</calcite-segmented-control-item>
+        </calcite-segmented-control>
+      </calcite-navigation>
+
+      <!-- time-zone="Etc/UTC": every date on screen (map, Time Bar, table) reads the same on any computer. -->
+      <arcgis-map id="map" basemap="dark-gray-vector" center="10, 15" zoom="2" time-zone="Etc/UTC">
+        <arcgis-zoom slot="top-start"></arcgis-zoom>
+        <!-- Time Bar (5.2) in the bottom slot, with a Time Bar Slider in its time-extent slot. -->
+        <arcgis-time-bar id="time-bar" slot="bottom-left" floating show-play show-previous show-next show-settings show-time-extent loop play-rate="1000" format="date">
+          <arcgis-time-bar-slider slot="time-extent" show-min show-max show-ticks popover-display="always"></arcgis-time-bar-slider>
+        </arcgis-time-bar>
+      </arcgis-map>
+
+      <!-- Feature Table that follows the map's time (viewTimeEnabled, 5.2). -->
+      <calcite-shell-panel slot="panel-bottom" id="bottom-panel" resizable>
+        <calcite-panel heading="Earthquakes in the current time" id="table-panel">
+          <arcgis-feature-table id="table" reference-element="map" view-time-enabled></arcgis-feature-table>
+        </calcite-panel>
+      </calcite-shell-panel>
+    </calcite-shell>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+/* Calcite 5.2: color-scheme picks light or dark for every component, Time Bar included. */
+:root {
+  color-scheme: dark;
+}
+#bottom-panel {
+  --calcite-shell-panel-height: 34vh;
+}
+#table {
+  height: 100%;
+}
+#mode {
+  align-self: center;
+  margin-inline-end: 12px;
+}
+/* The Time Bar spans the bottom of the map. */
+#time-bar {
+  width: min(900px, calc(100vw - 60px));
+}
