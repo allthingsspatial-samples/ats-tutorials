@@ -36,7 +36,7 @@ To use it, create a chart on the county layer in Map Viewer and save the web map
 
 ## Smoke test
 
-The smoke test, a quick automatic check that the sample loads with no errors, opens the built sample in headless Chrome and fails on any console error, failed request or `token=` request. `smoke.checks.mjs` also waits for `window.__atsSample.chartsReady` (both charts fired `arcgisRenderingComplete`), checks there are 2 charts, and turns dark mode on (the panel must no longer be white) and off again.
+The smoke test, a quick automatic check that the sample loads with no errors, opens the built sample in headless Chrome and fails on any console error, failed request or `token=` request. `smoke.checks.mjs` also waits for `window.__atsSample.chartsReady` (both charts fired `arcgisRenderingComplete`), checks there are 2 charts, and turns dark mode on and off: the header background must change (white to dark gray) and come back.
 
 ## Data note
 
