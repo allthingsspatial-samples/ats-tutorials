@@ -34,15 +34,15 @@ runs on a port your key does not allow.
 
 ## Not stored, one address at a time
 
-Search, reverse geocoding and the list button are all **geocodes (not stored)**: they have a monthly free tier on Location
+Search, reverse geocoding and the list button are all **geocodes (not stored)**: they have a free tier on Location
 Platform, and the results may be shown on the map but not saved (`forStorage` is `false`, the default).
 
 True batch geocoding is a different job. One `geocodeAddresses` request (`addressesToLocations` in the SDK) sends many addresses
 at once and returns results you are allowed to store, in a database for example. Batch geocoding with stored results needs the
 separate **geocoding (stored)** privilege for production apps, and it is billed as stored geocoding with no free tier (the
 pricing page listed $4 per 1,000 geocodes on 2026-11-22). This sample's key has only geocoding (not stored), so it loops over
-the list instead. Without the stored privilege, `geocodeAddresses` answers HTTP 403 ("User does not have permissions to store
-geocoding results").
+the list instead. With that key, a stored request (`geocodeAddresses`, or `findAddressCandidates` with `forStorage=true`) is denied
+with HTTP 403.
 
 Every click on **Geocode the list** geocodes every row again, one request each. The sample reads at most 25 rows (`MAX_ROWS` in
 `src/main.js`) so a long file cannot use up your free tier by accident.
