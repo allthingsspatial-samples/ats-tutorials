@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+  <Esri><CreaDate>20260821</CreaDate><CreaTime>09261900</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><ModDate>20260821</ModDate><ModTime>092619</ModTime></Esri>
+  <toolbox name="generate-branded-agol-thumbnails" alias="brandedThumbnails"><arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath><toolsets/></toolbox>
+  <tool name="GenerateBrandedThumbnails" displayname="Generate Branded AGOL Thumbnails" toolboxalias="brandedThumbnails">
+    <parameters>
+      <param sync="true" name="template" displayname="Branding template (PNG)" datatype="File" direction="Input" type="Required">
+        <dialogReference>The PNG image every thumbnail is drawn onto. The two text bands are fixed pixel rectangles, HEADER_BOX and FOOTER_BOX, declared at the top of the toolbox file - edit those to match your own template. The template itself is never written to; each item gets its own rendered copy.</dialogReference>
+      </param>
+      <param sync="true" name="out_dir" displayname="Output folder (rendered PNGs)" datatype="Folder" direction="Input" type="Required">
+        <dialogReference>The folder rendered PNGs are written to, one per item, named for the item's ID followed by _thumbnail.png. It is created if it does not exist.</dialogReference>
+      </param>
+      <param sync="true" name="scope" displayname="Scope" datatype="String" direction="Input" type="Required">
+        <dialogReference>"Entire account (all folders incl. root)" walks the root folder and every folder you own. "Selected folder(s)" walks only the folders you pick. Only items you own are processed. Defaults to the entire account.</dialogReference>
+      </param>
+      <param sync="true" name="folders" displayname="Folders (when scope = selected; use (root) for root)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Selected folder(s)". Pick one or more folder titles; use (root) for the root folder. The list is read from your ArcGIS Online folders the first time the parameter is enabled.</dialogReference>
+      </param>
+      <param sync="true" name="item_type" displayname="Item type filter (optional; blank = all)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Optional. Restricts the run to items whose type matches this text exactly, ignoring case - for example Web Map. Leave it blank to process every item in scope.</dialogReference>
+      </param>
+      <param sync="true" name="max_title_chars" displayname="Max title characters" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>The title is first shortened to this many characters at a word boundary, with an ellipsis, before it is fitted to the footer band. Defaults to 50. It is a pre-cap for absurdly long titles; the pixel-width fit below still applies.</dialogReference>
+      </param>
+      <param sync="true" name="max_title_lines" displayname="Max title lines" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>The greatest number of lines the title may wrap onto in the footer band. Defaults to 3. If the text still does not fit at the smallest font size, it is clipped to this many lines and the last line is ellipsized rather than overflowing the band.</dialogReference>
+      </param>
+      <param sync="true" name="dry_run" displayname="Dry run (render only -- do NOT update portal items)" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>Checked by default. When checked, thumbnails are rendered to the output folder and nothing in the portal is changed, so a first pass is only a folder of PNGs to review. Clear it to also upload each rendered PNG as that item's thumbnail.</dialogReference>
+      </param>
+      <param sync="true" name="brand_color" displayname="Brand color (hex)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>The hex color the item type is drawn in, in the header band. Defaults to #1C77FF. The title in the footer band is always drawn in white.</dialogReference>
+      </param>
+      <param sync="true" name="max_items" displayname="Max items to process" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>Caps how many items one run processes. Defaults to 2000.</dialogReference>
+      </param>
+    </parameters>
+    <summary>Stamp a branded thumbnail (item type + title) onto every ArcGIS Online item you own, from one PNG template. Text auto-fits each band. Dry run renders locally without touching the portal.</summary>
+    <usage>Sign in to ArcGIS Online in ArcGIS Pro before running. The tool authenticates with that active session and never sees a password.
+
+Each item is rendered from your template: the item TYPE in upper case, centered in the header band, in your brand color; the item TITLE left-aligned in the footer band, in white. Both blocks auto-fit by MEASURED pixel width - the largest font size at which the text wraps inside the band is used, and only if even the smallest size overflows is the text clipped and ellipsized. Word wrapping falls back to splitting a single word that is wider than the band.
+
+Dry run is checked by default and only writes PNGs to the output folder. Clear it to upload each rendered PNG as that item's thumbnail. An item that fails is reported as SKIPPED with its reason and the run continues; the tool finishes by reporting how many were rendered and, in a live run, how many were updated.
+
+MAKE IT YOURS: HEADER_BOX and FOOTER_BOX give the two bands in template pixels, TYPE_SIZE_HI/LO and TITLE_SIZE_HI/LO give the font sizes tried, LINE_SPACING multiplies the font's line height, and FONT_CANDIDATES lists the bold TrueType fonts probed in order - the first that loads wins, and if none does, the tool stops and asks you to add one.
+
+Needs Pillow and the ArcGIS API for Python, both of which ship with ArcGIS Pro.</usage>
+  </tool>
+  <dataIdInfo>
+    <idCitation><resTitle>generate-branded-agol-thumbnails</resTitle></idCitation>
+    <idAbs>Stamps a consistent branded thumbnail onto the ArcGIS Online items you own - the item type in upper case, centered in the header band, and the item title left-aligned in the footer band - by drawing onto one PNG template you supply, across the whole account or selected folders. Both text blocks auto-fit their band by measured pixel width, wrapping and then ellipsizing rather than overflowing. It brands your own template and does not design one for you, and with the default Dry run left checked it only writes PNGs to a folder, changing nothing in the portal until you clear it.</idAbs>
+    <idPurp>Render, and optionally apply, a consistent branded thumbnail for every ArcGIS Online item you own.</idPurp>
+    <searchKeys>
+      <keyword>ArcGIS Online</keyword>
+      <keyword>AGOL</keyword>
+      <keyword>thumbnail</keyword>
+      <keyword>branding</keyword>
+      <keyword>template</keyword>
+      <keyword>item</keyword>
+      <keyword>portal</keyword>
+      <keyword>batch</keyword>
+      <keyword>Pillow</keyword>
+      <keyword>PNG</keyword>
+      <keyword>dry run</keyword>
+      <keyword>content management</keyword>
+    </searchKeys>
+  </dataIdInfo>
+  <distInfo><distributor><distorFormat><formatName>ArcToolbox Toolbox</formatName></distorFormat></distributor></distInfo>
+</metadata>

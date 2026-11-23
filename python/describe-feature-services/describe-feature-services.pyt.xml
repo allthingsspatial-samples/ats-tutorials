@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+  <Esri><CreaDate>20260821</CreaDate><CreaTime>09261700</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><ModDate>20260821</ModDate><ModTime>092617</ModTime></Esri>
+  <toolbox name="describe-feature-services" alias="describeFeatureServices"><arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath><toolsets/></toolbox>
+  <tool name="DescribeFeatureServices" displayname="Describe Feature Services" toolboxalias="describeFeatureServices">
+    <parameters>
+      <param sync="true" name="scope" displayname="Scope" datatype="String" direction="Input" type="Required">
+        <dialogReference>Which services to describe. "Entire account (all folders)" walks the root folder and every folder you own. "Selected folder(s)" walks only the folders you pick. "Single service (item ID or URL)" describes one service. "Search by name" searches your own items by text. Only the input belonging to the chosen scope is enabled. Defaults to "Entire account (all folders)".</dialogReference>
+      </param>
+      <param sync="true" name="folders" displayname="Folders (when scope = Selected folder(s); use (root) for root)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Selected folder(s)". Pick one or more folder titles; use (root) for the root folder. The list is read from your active ArcGIS Pro sign-in the first time the parameter is enabled.</dialogReference>
+      </param>
+      <param sync="true" name="id_or_url" displayname="Item ID or service URL (when scope = Single service)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Single service (item ID or URL)". Accepts a portal item ID, or a service URL, which is resolved back to its portal item through the service's serviceItemId. A value here always takes priority over the other scopes, so it can also be used to describe a single service you do not own.</dialogReference>
+      </param>
+      <param sync="true" name="query" displayname="Search text (when scope = Search by name)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Search by name". The text is searched against items you own and the results are restricted to feature services. The tool warns if the scope is "Search by name" and neither this nor an item ID or URL has been supplied.</dialogReference>
+      </param>
+      <param sync="true" name="out_folder" displayname="Output folder (log file)" datatype="Folder" direction="Input" type="Required">
+        <dialogReference>The folder the log file is written to.</dialogReference>
+      </param>
+      <param sync="true" name="out_format" displayname="Log format" datatype="String" direction="Input" type="Required">
+        <dialogReference>XLSX writes three sheets - Services, Layers and Fields - with column widths fitted to the content. CSV writes one flat row per field. TXT writes a readable outline of each service, its layers and tables, and every field. XLSX requires openpyxl, which ships with ArcGIS Pro; CSV and TXT need nothing beyond the standard library. Defaults to XLSX.</dialogReference>
+      </param>
+      <param sync="true" name="out_name" displayname="Log file name (optional; blank = auto)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Base name for the log file, without an extension - the extension follows the chosen format. Leave it blank to name the file agol_inventory_ followed by a UTC timestamp.</dialogReference>
+      </param>
+      <param sync="true" name="count_records" displayname="Count records (one query per layer)" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>When checked, one count-only query is issued per layer and table to record its record count. Checked by default. It costs a request per layer and can be slow on large services; when a count fails, the layer records n/a and the run continues.</dialogReference>
+      </param>
+      <param sync="true" name="max_items" displayname="Max services to process" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>Caps how many feature services one run processes. Defaults to 500.</dialogReference>
+      </param>
+      <param sync="true" name="out_path" displayname="Log file written" datatype="File" direction="Output" type="Derived">
+        <dialogReference>Derived output. The full path of the log file that was written.</dialogReference>
+      </param>
+    </parameters>
+    <summary>Inventory ArcGIS Online feature services -- fields, types, domains, record counts, spatial reference, item metadata -- to a TXT, CSV, or multi-sheet XLSX log. Scope the whole account, selected folders, a single service (item ID or URL), or a name search.</summary>
+    <usage>Sign in to ArcGIS Online in ArcGIS Pro before running. The tool authenticates with that active session and never sees or stores a credential.
+
+For each service it records the item metadata - title, ID, owner, type, URL, created and modified dates, sharing access, tags and snippet - and then, for every layer and table it exposes, the name, layer ID, geometry type, record count, spatial reference WKID and field count. Each field contributes its name, alias, type, length, nullability and domain, with coded-value domains flattened to code=name pairs and range domains to a min and max.
+
+Choose the scope first; only the input that scope needs is enabled, and the folder picker is populated from your sign-in. An item ID or service URL always wins over the other scopes. If nothing matches the chosen scope, the tool stops with an error rather than writing an empty log.
+
+Nothing in the portal is modified - the run only reads. Needs the ArcGIS API for Python, which ships with ArcGIS Pro; the XLSX writer additionally uses openpyxl, which also ships with Pro. MIT licensed.</usage>
+  </tool>
+  <dataIdInfo>
+    <idCitation><resTitle>describe-feature-services</resTitle></idCitation>
+    <idAbs>Inventories ArcGIS Online hosted feature services into a data dictionary, recording for each service its item metadata and, for every layer and table, the geometry type, record count, spatial reference and per-field name, alias, type, length, nullability and domain. The log is written as TXT, CSV with one row per field, or a multi-sheet XLSX carrying Services, Layers and Fields sheets, scoped to the whole account, selected folders, a single service by item ID or URL, or a name search. It reads only - nothing in the portal is created, modified or shared - and it signs in with your active ArcGIS Pro session, so no credential is stored in the toolbox.</idAbs>
+    <idPurp>Write an ArcGIS Online feature-service inventory to a TXT, CSV or multi-sheet XLSX data dictionary.</idPurp>
+    <searchKeys>
+      <keyword>ArcGIS Online</keyword>
+      <keyword>AGOL</keyword>
+      <keyword>feature service</keyword>
+      <keyword>data dictionary</keyword>
+      <keyword>inventory</keyword>
+      <keyword>metadata</keyword>
+      <keyword>schema</keyword>
+      <keyword>fields</keyword>
+      <keyword>domains</keyword>
+      <keyword>record count</keyword>
+      <keyword>Excel</keyword>
+      <keyword>XLSX</keyword>
+      <keyword>CSV</keyword>
+      <keyword>documentation</keyword>
+      <keyword>audit</keyword>
+    </searchKeys>
+  </dataIdInfo>
+  <distInfo><distributor><distorFormat><formatName>ArcToolbox Toolbox</formatName></distorFormat></distributor></distInfo>
+</metadata>

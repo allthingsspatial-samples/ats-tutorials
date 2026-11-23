@@ -1,0 +1,5 @@
+# Python tools mirrored from allthingsspatial.io/assets/downloads: keep the bytes identical to the
+# served files (LF), so a SHA-256 compare against the live download passes on any OS.
+python/*/*.ipynb text eol=lf
+python/*/*.pyt text eol=lf
+python/*/*.pyt.xml text eol=lf

@@ -77,7 +77,30 @@ const PATTERNS = [
   ["secret", new RegExp("\\b(?:api[_-]?key|secret|password|passwd|token)\\s*[:=]\\s*[\"'][^\"'\\s]{12,}[\"']", "gi")],
 ];
 
-const SECRET_FILES = /(^|\/)(\.env(\.(?!example$)[^/]+)?|[^/]+\.(pem|key|p12|pfx)|id_(rsa|dsa|ecdsa|ed25519))$/;
+// Drive paths that identify no machine and no person, so a drive-path match that STARTS with one of
+// them is not a finding: a vendor install folder ("program files"), the "path to" placeholder, and
+// the "gis" example folder used in the python/<tool> notebooks, at the drive root only. One or more
+// backslashes are accepted (code inside a notebook string doubles them). Nothing else is exempt; a
+// user-profile path is still caught by its own pattern even under one of these prefixes.
+const GENERIC_DRIVE_PATH = new RegExp(
+  "^[A-Za-z]:" + BS + BS + "+(?:program files(?: \\(x86\\))?|path" + BS + BS + "+to|gis)(?:" + BS + BS + "|$)", "i");
+
+// Notebooks are JSON: decode string escapes per line before scanning, so an escaped newline after
+// a colon (an "except ... as e" line) is not read as a drive path, while an escaped real drive path
+// still is.
+const decodeJsonEscapes = (line) =>
+  line.replace(new RegExp(BS + BS + "([\"" + BS + BS + "/bfnrt])", "g"), (_, c) => ({ n: "\n", t: "\t", r: "\r", b: "", f: "" })[c] ?? c);
+
+function matches(category, re, line) {
+  re.lastIndex = 0;
+  if (category !== "local-path" || re !== PATTERNS[0][1]) return re.test(line);
+  for (const m of line.matchAll(re)) {
+    if (!GENERIC_DRIVE_PATH.test(line.slice(m.index))) return true;
+  }
+  return false;
+}
+
+const SECRET_FILES =/(^|\/)(\.env(\.(?!example$)[^/]+)?|[^/]+\.(pem|key|p12|pfx)|id_(rsa|dsa|ecdsa|ed25519))$/;
 
 const git = (...a) => execFileSync("git", a, { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
 const gitBuf = (...a) => execFileSync("git", a, { maxBuffer: 256 * 1024 * 1024 });
@@ -87,10 +110,11 @@ const report = (where, line, category) => findings.push(`${where}:${line}: ${cat
 
 function scanText(where, text) {
   const lines = text.split(/\r?\n/);
-  lines.forEach((line, i) => {
+  const notebook = where.endsWith(".ipynb");
+  lines.forEach((raw, i) => {
+    const line = notebook ? decodeJsonEscapes(raw) : raw;
     for (const [category, re] of PATTERNS) {
-      re.lastIndex = 0;
-      if (re.test(line)) report(where, i + 1, category);
+      if (matches(category, re, line)) report(where, i + 1, category);
     }
     // Denylist: every run of 1..maxWords consecutive parts, case-insensitive and case-sensitive.
     // Names are tested inside each identifier (split on - _ .); words across the whole line.

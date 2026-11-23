@@ -18,6 +18,7 @@ samples/
   <nn-topic>/       # one folder per episode sample, added with the episode
 python/
   con-04-mapclassify-breaks/  # Python companion: four mapclassify classifications of one county variable (CON-S01E04)
+  <tool-slug>/      # the free ArcGIS Pro / ArcGIS Online Python tools from the blog (see "Python tools from the blog")
 scripts/
   smoke.mjs         # headless smoke test that CI runs against every sample
   content-scan.mjs  # forbidden-content scan that CI runs on every push
@@ -35,6 +36,20 @@ Some episodes of the **GIS Concepts** series (playlist: https://www.youtube.com/
 | CON-S01E03 | [`con-03-renderers-by-level`](samples/con-03-renderers-by-level/): nominal, ordinal, interval and ratio renderers on one county layer | https://concepts.allthingsspatial.io/measurement-lab/ |
 | CON-S01E04 | [`con-04-class-breaks`](samples/con-04-class-breaks/): natural breaks, quantile, equal interval and standard deviation class breaks, 3-7 classes | https://concepts.allthingsspatial.io/concepts/classification/ |
 | CON-S01E04 | [`python/con-04-mapclassify-breaks`](python/con-04-mapclassify-breaks/) (Python): the same four classifications with mapclassify, breaks and class counts printed | https://concepts.allthingsspatial.io/concepts/classification/ |
+
+## Python tools from the blog
+
+The free tools offered as downloads on the All Things Spatial blog, mirrored here so you can read the source before you download. Each folder holds the notebook, the ArcGIS Pro Python toolbox (`.pyt`) and its Pro help (`.pyt.xml`), byte-identical to the files the blog serves. The blog's download buttons stay the primary way to get them.
+
+| Tool | What it does | Blog post | Video |
+|---|---|---|---|
+| [`python/generate-branded-agol-thumbnails`](python/generate-branded-agol-thumbnails/) | Branded thumbnails for every ArcGIS Online item you own, from one PNG template | [Automate ArcGIS Online thumbnails](https://www.allthingsspatial.io/pages/blog/automate-arcgis-online-thumbnails.html) | PY-S01E01 |
+| [`python/export-pro-symbols-to-svg`](python/export-pro-symbols-to-svg/) | ArcGIS Pro point symbols from a `.stylx` to SVG (and PNG) | [Export ArcGIS Pro symbols to SVG](https://www.allthingsspatial.io/pages/blog/export-arcgis-pro-symbols-to-svg.html) | PY-S01E02 |
+| [`python/describe-feature-services`](python/describe-feature-services/) | An ArcGIS Online data dictionary in Excel, on demand or as a scheduled notebook | [ArcGIS Online data dictionary to Excel](https://www.allthingsspatial.io/pages/blog/arcgis-online-data-dictionary-to-excel.html) | PY-S01E03, PY-S01E04 |
+| [`python/enrich-from-service`](python/enrich-from-service/) | Restartable three-phase ArcPy cursor template for enriching attributes from a service | [ArcPy cursor scope in Pro 3.7](https://www.allthingsspatial.io/pages/blog/arcpy-cursor-scope-pro-37.html) | |
+| [`python/audit-da-cursor-scope`](python/audit-da-cursor-scope/) | Finds scripts that use an `arcpy.da` cursor after its `with` block, before you upgrade to Pro 3.7 | [ArcPy cursor scope in Pro 3.7](https://www.allthingsspatial.io/pages/blog/arcpy-cursor-scope-pro-37.html) | |
+
+These folders have no `requirements.txt` because they need ArcGIS Pro (or an ArcGIS Online notebook) to run, so the CI `python` job skips them; the forbidden-content scan still covers every file.
 
 ## Run a sample
 

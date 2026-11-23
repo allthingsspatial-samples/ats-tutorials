@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+  <Esri><CreaDate>20260821</CreaDate><CreaTime>09261700</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><ModDate>20260821</ModDate><ModTime>092617</ModTime></Esri>
+  <toolbox name="export-pro-symbols-to-svg" alias="exportProSymbols"><arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath><toolsets/></toolbox>
+  <tool name="ExportProSymbols" displayname="Export Pro Symbols to SVG/PNG" toolboxalias="exportProSymbols">
+    <parameters>
+      <param sync="true" name="stylx" displayname="Style file (.stylx) -- blank = your Favorites" datatype="File" direction="Input" type="Optional">
+        <dialogReference>The .stylx style file to read. Leave it blank to auto-detect the Favorites.stylx of your ArcGIS Pro installation; if none is found a warning asks you to browse to a .stylx file, and the tool stops if you run it without one. A .stylx is a SQLite database whose ITEMS table holds each symbol's CIM JSON; the file is read with SELECT queries only and is never modified.</dialogReference>
+      </param>
+      <param sync="true" name="scope" displayname="Scope" datatype="String" direction="Input" type="Required">
+        <dialogReference>"All symbols" exports every item in the style. "Selected categories" exports the items in the categories you pick. "Single symbol" exports one named symbol. Defaults to "All symbols".</dialogReference>
+      </param>
+      <param sync="true" name="categories" displayname="Categories (when scope = Selected categories)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Selected categories". The list is the distinct CATEGORY values in the style file, sorted case-insensitively; items with no category are listed as (uncategorized). The enumerated catalog is cached per style file, so the list is not re-read on every validation pass.</dialogReference>
+      </param>
+      <param sync="true" name="symbol" displayname="Symbol (when scope = Single symbol)" datatype="String" direction="Input" type="Optional">
+        <dialogReference>Used when the scope is "Single symbol". The list is the symbol names in the style file, sorted case-insensitively. The name is matched without regard to case; if the style holds no item with that name, the failure is reported for that symbol and the run finishes.</dialogReference>
+      </param>
+      <param sync="true" name="svg_dir" displayname="SVG output folder" datatype="Folder" direction="Input" type="Required">
+        <dialogReference>The folder the .svg files are written to, one per symbol, named from the symbol name with any character other than a letter, digit, space, hyphen or underscore replaced. It is created if it does not exist. A picture marker's embedded image is written here as a sidecar file that its SVG references by name.</dialogReference>
+      </param>
+      <param sync="true" name="png_dir" displayname="PNG output folder (blank = same as SVG)" datatype="Folder" direction="Input" type="Optional">
+        <dialogReference>The folder the .png files are written to. Leave it blank to write them alongside the SVGs. It is created if it does not exist, and it is not used when "Also write PNG" is cleared.</dialogReference>
+      </param>
+      <param sync="true" name="write_png" displayname="Also write PNG" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>When checked, each SVG is also rasterized to a PNG at the target size. Checked by default. Rasterizing uses cairosvg when it is installed, otherwise a local Inkscape; with neither available the SVG is still written and the PNG is skipped with a note naming both options.</dialogReference>
+      </param>
+      <param sync="true" name="target_px" displayname="Target size (px)" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>The output width and height in pixels - the width and height attributes written on the SVG, and the size each PNG is rasterized at. Defaults to 200. It does not change the SVG's viewBox, which is derived from the symbol's own marker sizes, so the artwork scales rather than being cropped.</dialogReference>
+      </param>
+      <param sync="true" name="report" displayname="Result summary" datatype="String" direction="Output" type="Derived">
+        <dialogReference>Derived output. A one-line summary of how many symbols were exported and, if any, how many failed.</dialogReference>
+      </param>
+    </parameters>
+    <summary>Extract ArcGIS Pro symbols from a .stylx (default: your Favorites) to SVG and, optionally, PNG at a fixed pixel size. Export everything, selected categories, or a single symbol -- for CDN/popup hero icons.</summary>
+    <usage>Point the tool at a .stylx, or leave the path blank to use your ArcGIS Pro Favorites, choose a scope and an output folder, and run. The category and symbol pickers are filled from the resolved style file.
+
+Each symbol's CIM JSON is read from the style's ITEMS table and composed into one SVG. Vector marker layers become path and circle elements carrying the fill, fill opacity, stroke, stroke opacity and stroke width taken from the symbol's own solid fill and solid stroke layers; straight, cubic, quadratic and arc segments are all converted. Picture marker layers write their base64 image out beside the SVG and reference it. Layers are emitted in reverse CIM order so the first layer draws on top, and the viewBox is padded by half the widest stroke so a stroked edge is not clipped. Any other CIM layer type is skipped with a note naming it.
+
+The batch continues past a failure: each symbol is reported as OK or ERR, and the run finishes with the number exported and the number that failed.
+
+The rendering core uses only sqlite3 and json from the standard library and has no arcpy dependency, so it can be tested outside ArcGIS Pro; only this toolbox wrapper touches arcpy. PNG output additionally needs cairosvg or Inkscape. MIT licensed.</usage>
+  </tool>
+  <dataIdInfo>
+    <idCitation><resTitle>export-pro-symbols-to-svg</resTitle></idCitation>
+    <idAbs>Extracts ArcGIS Pro point symbols from a .stylx file to clean, scalable SVG, and optionally rasterizes each one to PNG at a fixed pixel size, for use as web legend, popup and CDN icons or for design handoff. A .stylx is a SQLite database whose ITEMS table holds each symbol's CIM JSON; this tool reads that JSON with SELECT queries only and composes the SVG directly, so the style file is never modified. It converts vector and picture marker layers only - any other CIM layer type is skipped with a note - and PNG output depends on cairosvg or a local Inkscape, without which the SVGs are still written and the PNGs are skipped.</idAbs>
+    <idPurp>Export ArcGIS Pro symbols from a .stylx to SVG, and optionally PNG, for web and design use.</idPurp>
+    <searchKeys>
+      <keyword>stylx</keyword>
+      <keyword>style</keyword>
+      <keyword>symbol</keyword>
+      <keyword>symbology</keyword>
+      <keyword>marker</keyword>
+      <keyword>SVG</keyword>
+      <keyword>PNG</keyword>
+      <keyword>CIM</keyword>
+      <keyword>icon</keyword>
+      <keyword>export</keyword>
+      <keyword>legend</keyword>
+      <keyword>Favorites</keyword>
+      <keyword>cairosvg</keyword>
+      <keyword>Inkscape</keyword>
+      <keyword>web map</keyword>
+    </searchKeys>
+  </dataIdInfo>
+  <distInfo><distributor><distorFormat><formatName>ArcToolbox Toolbox</formatName></distorFormat></distributor></distInfo>
+</metadata>

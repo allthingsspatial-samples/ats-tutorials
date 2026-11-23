@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+  <Esri><CreaDate>20260821</CreaDate><CreaTime>09490000</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><ModDate>20260821</ModDate><ModTime>094900</ModTime></Esri>
+  <toolbox name="enrich-from-service" alias="enrichfromservice"><arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath><toolsets/></toolbox>
+  <tool name="EnrichFromService" displayname="Enrich From Service" toolboxalias="enrichfromservice">
+    <parameters>
+      <param sync="true" name="fc" displayname="Feature class" datatype="Feature Layer" direction="Input" type="Required">
+        <dialogReference>The feature class or layer to enrich. It must already exist; if it does not, the tool stops before any data is read.</dialogReference>
+      </param>
+      <param sync="true" name="where" displayname="Where clause (rows that still need work)" datatype="SQL Expression" direction="Input" type="Required">
+        <dialogReference>Required, and it has no default. Express the rows that still NEED work - for example CITY IS NULL OR CITY = ''. The same clause drives both the read pass and the write pass, which is what makes the job restartable after a failure and what stops a metered service being billed for rows that already have values. A clause that selects every row (1=1 or 1&lt;&gt;0) is refused; if that is genuinely intended, say so in a clause that names the fields.</dialogReference>
+      </param>
+      <param sync="true" name="read_fields" displayname="Read fields (OID@ is added automatically)" datatype="Field" direction="Input" type="Required">
+        <dialogReference>The fields read for each row of the worklist. Each row is handed to the lookup function as a dictionary keyed by these field names. OID@ is added automatically as the first read field - it is the join key between the read and write phases. Every field named here must exist on the feature class.</dialogReference>
+      </param>
+      <param sync="true" name="write_fields" displayname="Fields to write" datatype="Field" direction="Input" type="Required">
+        <dialogReference>The fields the lookup results are written into. OID@ is added automatically so rows can be matched back to the worklist. Every other field named here must exist on the feature class. A value is written only when the lookup returned that field and the proposed value differs from what is already stored.</dialogReference>
+      </param>
+      <param sync="true" name="dry_run" displayname="Dry run (preview only, write nothing)" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>Checked by default. When checked, the tool reports every change it would make and writes nothing. Clear it to apply the changes. The summary names how many rows would change, and a warning is raised when a dry run planned at least one change.</dialogReference>
+      </param>
+      <param sync="true" name="max_rows" displayname="Maximum rows this run" datatype="Long" direction="Input" type="Optional">
+        <dialogReference>Caps how many rows one run may read, and so how much a mistake can touch. Must be a positive integer; defaults to 500. When a run stops at the cap there are likely more rows matching the where clause - re-run to continue, because the clause makes the job resumable.</dialogReference>
+      </param>
+      <param sync="true" name="only_if_empty" displayname="Only fill values that are currently empty" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>Checked by default. When checked, a value is written only where the stored value is currently empty. Emptiness is re-checked during the write pass, because another editor may have filled the row since the read pass saw it. Values skipped for this reason are counted in the summary.</dialogReference>
+      </param>
+      <param sync="true" name="log" displayname="Write a JSON log (optional)" datatype="File" direction="Output" type="Optional">
+        <dialogReference>Optional. Writes a JSON record of the run - the UTC time, whether it was a dry run, the row counts, every planned change and any rows the lookup failed on - so one run can be diffed against the last.</dialogReference>
+      </param>
+    </parameters>
+    <summary>Read a worklist, call an external service with no cursor open, write results back by OID. Dry run by default; a where clause is required.</summary>
+    <usage>This is a template for three-phase attribute enrichment, not a finished tool. Phase 1 reads the worklist with a SearchCursor and closes it. Phase 2 calls your lookup function with no cursor open, so it may take as long as it needs - a network call, a rate limit, a retry - without holding a lock on the table. Phase 3 writes the results back with a fresh UpdateCursor, matching rows on OID@.
+
+TO USE IT: edit the lookup() function in the .pyt. It receives one row as a dictionary keyed by the read field names, and returns either a dictionary of field name to value to write, or None to skip the row. Everything else on this dialog is a parameter. An exception raised by the lookup for one row is recorded and the run continues.
+
+Nothing is touched until the configuration passes: the feature class must exist, the where clause is required and one matching every row is refused, OID@ must be present in both field lists, every other named field must exist on the feature class, and the row cap must be a positive integer. A bad configuration therefore costs nothing.
+
+The run summary reports rows read against the cap, rows the lookup answered, rows the lookup failed on, rows with at least one change, values skipped because they were already set, and the first few changes and failures. Dry run is checked by default and nothing is written until you clear it.
+
+Phase 3 rewrites rows. Test against a copy of your data first. MIT licensed.</usage>
+  </tool>
+  <dataIdInfo>
+    <idCitation><resTitle>enrich-from-service</resTitle></idCitation>
+    <idAbs>A three-phase attribute enrichment template: it reads a worklist with a SearchCursor and closes it, calls an external lookup with no cursor open, then writes the results back with a fresh UpdateCursor matched on OID@. The same where clause drives the read and the write, which is what makes a run restartable and what stops a metered service being billed for rows that already have values; a dry run is the default, a where clause is required, and a clause matching every row is refused. It is a template rather than a finished tool - it performs no lookup of its own until you supply the lookup() function in the .pyt - and phase 3 rewrites rows, so test against a copy of your data first.</idAbs>
+    <idPurp>Enrich attributes from an external service without holding a cursor open, dry run by default.</idPurp>
+    <searchKeys>
+      <keyword>arcpy</keyword>
+      <keyword>arcpy.da</keyword>
+      <keyword>SearchCursor</keyword>
+      <keyword>UpdateCursor</keyword>
+      <keyword>enrichment</keyword>
+      <keyword>attribute update</keyword>
+      <keyword>external service</keyword>
+      <keyword>API</keyword>
+      <keyword>dry run</keyword>
+      <keyword>where clause</keyword>
+      <keyword>restartable</keyword>
+      <keyword>template</keyword>
+      <keyword>ArcGIS Pro 3.7</keyword>
+    </searchKeys>
+  </dataIdInfo>
+  <distInfo><distributor><distorFormat><formatName>ArcToolbox Toolbox</formatName></distorFormat></distributor></distInfo>
+</metadata>

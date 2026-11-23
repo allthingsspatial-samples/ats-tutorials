@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+  <Esri><CreaDate>20260821</CreaDate><CreaTime>09261700</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><ModDate>20260822</ModDate><ModTime>085909</ModTime></Esri>
+  <toolbox name="audit-da-cursor-scope" alias="cursorscope"><arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath><toolsets/></toolbox>
+  <tool name="AuditCursorScope" displayname="Audit da Cursor Scope" toolboxalias="cursorscope">
+    <parameters>
+      <param sync="true" name="target" displayname="Folder or file to scan" datatype="Folder; File" direction="Input" type="Required">
+        <dialogReference>A folder to scan, or a single file. When a folder is given, every .py, .pyt and .ipynb file under it is parsed; when a file is given, only that file is parsed. Nothing is executed - the source is parsed with the standard-library ast module - so it is safe to point at code you have not read. If the path does not exist, the tool stops with an error.</dialogReference>
+      </param>
+      <param sync="true" name="recurse" displayname="Include subfolders" datatype="Boolean" direction="Input" type="Optional">
+        <dialogReference>When checked, subfolders of the scanned folder are included; when cleared, only files directly in the folder are read. Checked by default. It has no effect when the target is a single file. If no .py, .pyt or .ipynb file is found, the tool stops and suggests checking this box when the files are nested.</dialogReference>
+      </param>
+      <param sync="true" name="out_report" displayname="Write report to file (optional)" datatype="File" direction="Output" type="Optional">
+        <dialogReference>Optional. Writes the report to this file in addition to the tool messages. A path ending in .json writes the findings as JSON, one object per finding with its origin, location, name and kind; any other path writes the same text report that is printed to the messages. The parameter accepts txt and json files. Leave it empty to report only in the tool messages.</dialogReference>
+      </param>
+    </parameters>
+    <summary>Find arcpy.da cursors used after their `with` block closes - the pattern that stops working at ArcGIS Pro 3.7. Reports file and line for each place to review.</summary>
+    <usage>Run this against a scripts folder before you schedule the move to ArcGIS Pro 3.7. At 3.7 a da cursor is invalidated when its `with` block exits, so a script that called reset() or re-iterated the cursor afterwards worked before the upgrade and raises ValueError: I/O operation on closed file after it.
+
+The check is scope aware: for each `with` block that opens a SearchCursor, UpdateCursor or InsertCursor it asks whether that name is loaded again after the block ends, within the same scope, and it stops at the next rebinding of the name - so a variable reused later for something unrelated is not reported. Notebook code cells are joined into one parse unit, because a notebook shares one namespace and a cursor opened in one cell and reset in the next is a real breakage that is invisible if each cell is parsed alone; findings in a notebook are reported by cell and line. Lines beginning with % or !, and any cell whose first line is a %% cell magic, are blanked before parsing.
+
+Each finding is printed as a message, and a warning reports the total. Findings are places to LOOK, not confirmed failures: the check follows a name, so a name this tool cannot trace may appear. Where the finding is real, the fix is a fresh cursor for the second pass, or finishing the work inside the original `with` block.
+
+An empty result is not a clean bill of health. Cursors held in containers or attributes, and Python embedded in .atbx or .tbx toolboxes, are outside what this tool can see. A file that will not parse is reported as a SYNTAX finding rather than skipped silently.
+
+Standard library only - no packages beyond arcpy are needed. MIT licensed.</usage>
+  </tool>
+  <dataIdInfo>
+    <idCitation><resTitle>audit-da-cursor-scope</resTitle></idCitation>
+    <idAbs>Scans a folder or a single file for arcpy.da cursors that are used after their `with` block has closed - the pattern that raises ValueError: I/O operation on closed file at ArcGIS Pro 3.7 - and reports the file and line number of each place to review. It reads .py, .pyt and .ipynb source with the standard-library ast module and executes nothing, so it is safe to run against code you have not read. It does not modify or fix any file, and its findings are a review list rather than a verdict: cursors held in containers or attributes, and Python embedded in .atbx or .tbx toolboxes, are outside what it can see.</idAbs>
+    <idPurp>Find arcpy.da cursors used after their `with` block closes, before upgrading to ArcGIS Pro 3.7.</idPurp>
+    <searchKeys>
+      <keyword>arcpy</keyword>
+      <keyword>arcpy.da</keyword>
+      <keyword>cursor</keyword>
+      <keyword>SearchCursor</keyword>
+      <keyword>UpdateCursor</keyword>
+      <keyword>InsertCursor</keyword>
+      <keyword>ArcGIS Pro 3.7</keyword>
+      <keyword>upgrade</keyword>
+      <keyword>migration</keyword>
+      <keyword>audit</keyword>
+      <keyword>static analysis</keyword>
+      <keyword>ast</keyword>
+      <keyword>notebook</keyword>
+      <keyword>code review</keyword>
+    </searchKeys>
+  </dataIdInfo>
+  <distInfo><distributor><distorFormat><formatName>ArcToolbox Toolbox</formatName></distorFormat></distributor></distInfo>
+</metadata>
