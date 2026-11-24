@@ -19,6 +19,7 @@ samples/
   08-calcite-app-shell/  # a full app layout with Calcite: shell, action bar, panels, dark mode (BLD-S02E04)
   09-smart-popups/  # popups with Arcade values, an Arcade-built table, charts, and fetchPopupFeatures in a side panel (BLD-S02E05)
   10-selection-table/  # Selection Toolbar + Selection List + Feature Table in sync, built-in CSV export (BLD-S02E06)
+  11-smart-editing/  # an Editor form that reacts to what you enter: Arcade dynamic choices (5.2), visibility and required rules, photo attachments in the form (BLD-S02E07)
   12-time-bar/  # the Time Bar (5.2) plays a month of USGS earthquakes: time window, instant and cumulative modes, a Feature Table that follows view time (BLD-S02E08)
   <nn-topic>/       # one folder per episode sample, added with the episode
 python/
