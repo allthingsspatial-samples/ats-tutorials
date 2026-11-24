@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri><CreaDate>20261118</CreaDate><CreaTime>02000000</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce></Esri>
+	<tool name="DescribeFeatureServices" displayname="Describe Feature Services" toolboxalias="atsstarter" xmlns="">
+		<arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath>
+		<parameters>
+			<param name="folder" displayname="Folder" type="Optional" direction="Input" datatype="String" expression="{folder}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;The folder of your content to search. The list is filled from your account when the dialog opens: (all my folders), (root folder) and each of your folders. The default is (all my folders).&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="tag" displayname="Tag" type="Optional" direction="Input" datatype="String" expression="{tag}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Only items that carry this tag (not case sensitive), for example a tag you give your test items. Leave it empty for every hosted feature layer in the folder.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="out_csv" displayname="Output Report" type="Required" direction="Output" datatype="File" expression="out_csv"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;The CSV file to write: one row per layer or table with item_title, item_id, sharing, layer, geometry, features, fields, editable, modified, size_kb and thumbnail.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="service_count" displayname="Feature Services" type="Derived" direction="Output" datatype="Long" expression="service_count"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;The number of feature service items described.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+		</parameters>
+		<summary>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Writes a CSV report of the hosted feature layers you own in the portal ArcGIS Pro is signed in to: one row per layer with its geometry type, number of features, number of fields, sharing level and last change.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</summary>
+		<usage>&lt;DIV STYLE="text-align:Left;"&gt;&lt;UL&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Sign in to ArcGIS Online (or your ArcGIS Enterprise portal) in ArcGIS Pro first. The tool connects with the ArcGIS API for Python, GIS("pro"): no user name, password or token is stored in the tool.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Only items you own are read. The tool changes nothing in the portal.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Feature counts come from a count query on each layer; a layer with many features still answers quickly.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;/UL&gt;&lt;/DIV&gt;</usage>
+	</tool>
+	<dataIdInfo><idCitation><resTitle>Describe Feature Services</resTitle></idCitation><idPurp>Inventory the hosted feature layers you own to a CSV report.</idPurp><searchKeys><keyword>ArcGIS Online</keyword><keyword>ArcGIS API for Python</keyword><keyword>feature service</keyword><keyword>report</keyword><keyword>Python toolbox</keyword></searchKeys><idCredit>All Things Spatial (MIT License)</idCredit></dataIdInfo>
+	<distInfo><distributor><distorFormat><formatName>ArcToolbox Tool</formatName></distorFormat></distributor></distInfo>
+	<mdHrLv><ScopeCd value="005"/></mdHrLv>
+</metadata>

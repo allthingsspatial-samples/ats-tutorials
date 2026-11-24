@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri><CreaDate>20261118</CreaDate><CreaTime>02300000</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce></Esri>
+	<tool name="CheckScriptToolParameters" displayname="Check Script Tool Parameters" toolboxalias="atsstarter" xmlns="">
+		<arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath>
+		<parameters>
+			<param name="in_toolbox" displayname="Input Toolbox (.atbx)" type="Required" direction="Input" datatype="File" expression="in_toolbox"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;The .atbx toolbox to check. It is read only; the tool never changes it.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="out_report" displayname="Output Report (Markdown)" type="Optional" direction="Output" datatype="File" expression="{out_report}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;A Markdown file with one parameter table per tool (index, label, name, data type, direction, type) and its issues. Paste it into a README to document the toolbox.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="issue_count" displayname="Issues Found" type="Derived" direction="Output" datatype="Long" expression="issue_count"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;The number of issues across all script tools.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+		</parameters>
+		<summary>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Lists the parameters of every script tool in an .atbx toolbox and checks them against each tool's script: every GetParameterAsText(n) or GetParameter(n) index exists, every input parameter is read, and every derived output is set with SetParameterAsText(n) or SetParameter(n). A parameter index that does not match the dialog order is the most common script tool mistake.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</summary>
+		<usage>&lt;DIV STYLE="text-align:Left;"&gt;&lt;UL&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Works with linked scripts (Execution page, a script file) and embedded scripts.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Only literal indexes are checked, for example GetParameterAsText(2). An index held in a variable is not seen.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Model tools are listed with their parameters but not checked. Python toolboxes (.pyt) are not read; their parameters are declared in code.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;LI&gt;&lt;P&gt;&lt;SPAN&gt;Issues are warnings; the tool still succeeds.&lt;/SPAN&gt;&lt;/P&gt;&lt;/LI&gt;&lt;/UL&gt;&lt;/DIV&gt;</usage>
+	</tool>
+	<dataIdInfo><idCitation><resTitle>Check Script Tool Parameters</resTitle></idCitation><idPurp>Document a script tool's parameters and check the indexes its script uses.</idPurp><searchKeys><keyword>Python</keyword><keyword>script tool</keyword><keyword>parameters</keyword><keyword>atbx</keyword></searchKeys><idCredit>All Things Spatial (MIT License)</idCredit></dataIdInfo>
+	<distInfo><distributor><distorFormat><formatName>ArcToolbox Tool</formatName></distorFormat></distributor></distInfo>
+	<mdHrLv><ScopeCd value="005"/></mdHrLv>
+</metadata>

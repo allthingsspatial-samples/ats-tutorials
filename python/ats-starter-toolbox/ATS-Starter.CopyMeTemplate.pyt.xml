@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri><CreaDate>20261117</CreaDate><CreaTime>23300000</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce></Esri>
+	<tool name="CopyMeTemplate" displayname="Copy-Me Template" toolboxalias="atsstarter" xmlns="">
+		<arcToolboxHelpPath>c:\program files\arcgis\pro\Resources\Help\gp</arcToolboxHelpPath>
+		<parameters>
+			<param name="in_features" displayname="Input Features" type="Required" direction="Input" datatype="Feature Layer" expression="in_features"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a required feature layer input.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="field" displayname="Field" type="Optional" direction="Input" datatype="Field" expression="{field}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a field picked from Input Features (parameterDependencies).&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="folder" displayname="Folder" type="Optional" direction="Input" datatype="Folder" expression="{folder}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a folder input.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="choice" displayname="Choice" type="Optional" direction="Input" datatype="String" expression="{Option A | Option B}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a drop-down list (value list filter).&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="number" displayname="Number" type="Optional" direction="Input" datatype="Double" expression="{number}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a number limited to 0 to 100 (range filter).&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+			<param name="flag" displayname="Flag" type="Optional" direction="Input" datatype="Boolean" expression="{flag}"><dialogReference>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;Example of a check box.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</dialogReference></param>
+		</parameters>
+		<summary>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;A starting point for a new tool. It lists its inputs in the messages and changes nothing. Copy the CopyMeTemplate class in ATS-Starter.pyt, rename it (letters and numbers only), keep the parameters you need, write your logic in execute and add the class name to Toolbox.tools.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</summary>
+		<usage>&lt;DIV STYLE="text-align:Left;"&gt;&lt;P&gt;&lt;SPAN&gt;After editing the .pyt, close the editor or right-click the toolbox and click Refresh. ArcGIS Pro asks whether you trust the code after every change.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;</usage>
+	</tool>
+	<dataIdInfo><idCitation><resTitle>Copy-Me Template</resTitle></idCitation><idPurp>Template class for a new Python toolbox tool.</idPurp><searchKeys><keyword>template</keyword><keyword>Python toolbox</keyword></searchKeys><idCredit>All Things Spatial (MIT License)</idCredit></dataIdInfo>
+	<distInfo><distributor><distorFormat><formatName>ArcToolbox Tool</formatName></distorFormat></distributor></distInfo>
+	<mdHrLv><ScopeCd value="005"/></mdHrLv>
+</metadata>
