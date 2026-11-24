@@ -59,8 +59,10 @@ The code shown on camera in the **Automate GIS** series, one folder per episode,
 
 | Episode | Folder | What is in it |
 |---|---|---|
+| PRO-S03 A1 How to Batch Process Data with ModelBuilder Iterators | [`python/pro-s03-a1-modelbuilder-iterators`](python/pro-s03-a1-modelbuilder-iterators/) | The ModelBuilder toolbox with the county loop |
+| PRO-S03 A2 How to Add If-Then Logic to a ModelBuilder Model | [`python/pro-s03-a2-modelbuilder-if-then-logic`](python/pro-s03-a2-modelbuilder-if-then-logic/) | The ModelBuilder toolbox with the If Row Count Is check |
 | PRO-S03 A3 How to Turn a ModelBuilder Model into a Python Script | [`python/pro-s03-a3-modelbuilder-to-python-script`](python/pro-s03-a3-modelbuilder-to-python-script/) | The cleaned stand-alone script |
-| PRO-S03 A4 How to Turn a Python Script into a Script Tool | [`python/pro-s03-a4-python-script-to-script-tool`](python/pro-s03-a4-python-script-to-script-tool/) | The script tool's script and its parameter table |
+| PRO-S03 A4 How to Turn a Python Script into a Script Tool | [`python/pro-s03-a4-python-script-to-script-tool`](python/pro-s03-a4-python-script-to-script-tool/) | The script tool's script, its parameter table and the on-camera toolbox |
 | PRO-S03 A5 How to Build a Python Toolbox (.pyt) in ArcGIS Pro | [`python/pro-s03-a5-python-toolbox-pyt`](python/pro-s03-a5-python-toolbox-pyt/) | The finished `MyTools.pyt` |
 | PRO-S03 A6 How to Make Smart Tool Dialogs in ArcGIS Pro | [`python/pro-s03-a6-smart-tool-dialogs`](python/pro-s03-a6-smart-tool-dialogs/) | The finished `SymbolTools.pyt` |
 | PRO-S03 A1 to A8 | [`python/ats-starter-toolbox`](python/ats-starter-toolbox/) | `ATS-Starter.pyt`, its help files and headless tests |

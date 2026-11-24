@@ -14,8 +14,9 @@ The script behind the script tool from the **Automate GIS** episode A4. The stan
 
 - [`solar_screen_tool.py`](solar_screen_tool.py): the script tool's script, as shown and run on camera
 - [`solar_screen_all_counties.py`](solar_screen_all_counties.py): the start state, the A3 stand-alone script it was made from
+- [`Script_Tool_2026-11-18.atbx`](Script_Tool_2026-11-18.atbx): the project toolbox with the script tool `SolarScreenAllCounties`, as built on camera
 
-The episode builds the script tool on camera in the project toolbox (`.atbx`), so no toolbox file is included here. To build it yourself, see "Make the script tool" below.
+The toolbox points to its script by a relative path, `scripts\solar_screen_tool.py` next to the toolbox (the layout of the data pack project). To use it, put the `.atbx` in the data pack project folder in place of the empty start-state toolbox. To keep the files as they are in this folder instead, open the tool's **Properties** > **Execution** and point the script file to `solar_screen_tool.py`. To build the tool yourself, see "Make the script tool" below.
 
 ## Versions
 
