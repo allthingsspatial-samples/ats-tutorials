@@ -53,6 +53,18 @@ The free tools offered as downloads on the All Things Spatial blog, mirrored her
 | [`python/enrich-from-service`](python/enrich-from-service/) | Restartable three-phase ArcPy cursor template for enriching attributes from a service | [ArcPy cursor scope in Pro 3.7](https://www.allthingsspatial.io/pages/blog/arcpy-cursor-scope-pro-37.html) | |
 | [`python/audit-da-cursor-scope`](python/audit-da-cursor-scope/) | Finds scripts that use an `arcpy.da` cursor after its `with` block, before you upgrade to Pro 3.7 | [ArcPy cursor scope in Pro 3.7](https://www.allthingsspatial.io/pages/blog/arcpy-cursor-scope-pro-37.html) | |
 
+## ArcGIS Pro: Automate GIS episodes (PRO-S03)
+
+The code shown on camera in the **Automate GIS** series, one folder per episode, plus the ATS Starter Toolbox that grows by one tool per episode. Watch pages: https://www.allthingsspatial.io/learn/
+
+| Episode | Folder | What is in it |
+|---|---|---|
+| PRO-S03 A3 How to Turn a ModelBuilder Model into a Python Script | [`python/pro-s03-a3-modelbuilder-to-python-script`](python/pro-s03-a3-modelbuilder-to-python-script/) | The cleaned stand-alone script |
+| PRO-S03 A4 How to Turn a Python Script into a Script Tool | [`python/pro-s03-a4-python-script-to-script-tool`](python/pro-s03-a4-python-script-to-script-tool/) | The script tool's script and its parameter table |
+| PRO-S03 A5 How to Build a Python Toolbox (.pyt) in ArcGIS Pro | [`python/pro-s03-a5-python-toolbox-pyt`](python/pro-s03-a5-python-toolbox-pyt/) | The finished `MyTools.pyt` |
+| PRO-S03 A6 How to Make Smart Tool Dialogs in ArcGIS Pro | [`python/pro-s03-a6-smart-tool-dialogs`](python/pro-s03-a6-smart-tool-dialogs/) | The finished `SymbolTools.pyt` |
+| PRO-S03 A1 to A8 | [`python/ats-starter-toolbox`](python/ats-starter-toolbox/) | `ATS-Starter.pyt`, its help files and headless tests |
+
 These folders have no `requirements.txt` because they need ArcGIS Pro (or an ArcGIS Online notebook) to run, so the CI `python` job skips them; the forbidden-content scan still covers every file.
 
 ## Run a sample

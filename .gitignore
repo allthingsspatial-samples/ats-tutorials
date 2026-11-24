@@ -24,3 +24,6 @@ npm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+
+# ATS Starter Toolbox headless tests write synthetic data here
+python/*/tests/_scratch/
