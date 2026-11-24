@@ -21,6 +21,7 @@ samples/
   10-selection-table/  # Selection Toolbar + Selection List + Feature Table in sync, built-in CSV export (BLD-S02E06)
   11-smart-editing/  # an Editor form that reacts to what you enter: Arcade dynamic choices (5.2), visibility and required rules, photo attachments in the form (BLD-S02E07)
   12-time-bar/  # the Time Bar (5.2) plays a month of USGS earthquakes: time window, instant and cumulative modes, a Feature Table that follows view time (BLD-S02E08)
+  13-map-charts/  # a histogram and a bar chart beside the map from one county layer: filtered by the view extent, selection synced with the map, dark mode (BLD-S02E09)
   <nn-topic>/       # one folder per episode sample, added with the episode
 python/
   con-04-mapclassify-breaks/  # Python companion: four mapclassify classifications of one county variable (CON-S01E04)
